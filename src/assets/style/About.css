@@ -1,0 +1,77 @@
+/* About Statement Section */
+.about-statement {
+  position: relative;
+  padding: 120px 2rem;
+  background: #000000;
+  display: flex;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.statement-container {
+  max-width: 900px;
+  position: relative;
+  z-index: 2;
+  text-align: center;
+}
+
+.statement-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2.5rem;
+}
+
+.main-paragraph {
+  font-size: 2.2rem;
+  font-weight: 500;
+  color: #ffffff;
+  line-height: 1.4;
+  letter-spacing: -0.02em;
+}
+
+.divider {
+  width: 60px;
+  height: 1px;
+  background: linear-gradient(to right, transparent, #d4af37, transparent);
+}
+
+.sub-paragraph {
+  font-size: 1.2rem;
+  color: rgba(255, 255, 255, 0.6);
+  line-height: 1.8;
+  max-width: 700px;
+}
+
+/* Background Glow Effect */
+.accent-glow {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 400px;
+  height: 400px;
+  background: radial-gradient(circle, rgba(212, 175, 55, 0.08) 0%, transparent 70%);
+  filter: blur(40px);
+  z-index: -1;
+  pointer-events: none;
+}
+
+
+
+
+
+/* Mobile Adjustments */
+@media (max-width: 768px) {
+  .about-statement {
+    padding: 80px 1.5rem;
+  }
+  
+  .main-paragraph {
+    font-size: 1.6rem;
+  }
+
+  .sub-paragraph {
+    font-size: 1rem;
+  }
+}

@@ -1,0 +1,97 @@
+.benefits-section {
+  background: #000000;
+  /* Same as services */
+  padding: 80px 0;
+  color: #ffffff;
+}
+
+.benefits-container {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+.benefits-header {
+  text-align: center;
+  margin-bottom: 60px;
+}
+
+.minimal-title {
+  font-size: 2.2rem;
+  font-weight: 300;
+  letter-spacing: -1px;
+}
+
+.pink-accent {
+  color: #db2777;
+  /* Subtle pink used in services */
+  font-weight: 500;
+}
+
+.minimal-subtitle {
+  color: #666;
+  margin-top: 10px;
+  font-size: 1rem;
+}
+
+/* Grid Layout */
+.benefits-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 25px;
+}
+
+/* Minimal Card Styling */
+.minimal-benefit-card {
+  background: #111;
+  padding: 40px 30px;
+  border-radius: 16px;
+  border: 1px solid #222;
+  transition: all 0.3s ease;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.minimal-benefit-card:hover {
+  border-color: #db2777;
+  /* Subtle pink border on hover */
+  transform: translateY(-5px);
+}
+
+.benefit-icon-wrapper {
+  color: #db2777;
+  background: rgba(219, 39, 119, 0.1);
+  padding: 15px;
+  border-radius: 12px;
+  margin-bottom: 20px;
+}
+
+.benefit-tag {
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  color: #db2777;
+  font-weight: 700;
+  display: block;
+  margin-bottom: 10px;
+}
+
+.minimal-benefit-card h3 {
+  font-size: 1.4rem;
+  margin-bottom: 15px;
+  font-weight: 500;
+}
+
+.minimal-benefit-card p {
+  color: #888;
+  line-height: 1.6;
+  font-size: 0.95rem;
+}
+
+/* Mobile Adjustments */
+@media (max-width: 768px) {
+  .minimal-title {
+    font-size: 1.8rem;
+  }
+}
