@@ -32,12 +32,16 @@ export default function Navbar() {
         <div className="hero-content">
           <div className="hero-text">
             <h1 className="hero-title">
-              <span className="title-line">Book Appointments Faster</span>
-              <span className="title-line">Grow Your Business</span>
+      <span className="title-line">
+      Elevate Your <span className="pink-accent">Look</span>
+    </span>
+    <span className="title-line">
+      <span className="pink-accent">Define</span> Your Style
+    </span>
             </h1>
-            <p className="hero-description">
-              A simple and elegant appointment booking page designed to turn visitors into real clients.
-            </p>
+         <p className="hero-description">
+    Luxury hair and beauty treatments tailored just for you. Book your transformation in seconds.
+  </p>
             <div className="hero-buttons">
               <button className="btn btn-primary" onClick={scrollToBooking}>
                 Booking Now

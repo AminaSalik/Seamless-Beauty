@@ -3,6 +3,7 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import { Autoplay, Pagination, Navigation } from 'swiper/modules';
 import { Sparkles, Scissors, Wind, Heart, ChevronLeft, ChevronRight, X } from 'lucide-react';
 
+// Swiper Styles
 import 'swiper/css';
 import 'swiper/css/pagination';
 import 'swiper/css/navigation';
@@ -12,7 +13,23 @@ export default function Services() {
   const [selectedService, setSelectedService] = useState(null);
 
   useEffect(() => {
+    // 1. Initialize or Refresh AOS when the component mounts
+    if (window.AOS) {
+      window.AOS.init({
+        duration: 1000,
+        once: true,
+        offset: 100,
+      });
+      window.AOS.refresh(); // Crucial for SPAs
+    }
+
+    // 2. Handle body scroll when modal is open
     document.body.style.overflow = selectedService ? 'hidden' : 'unset';
+    
+    // Cleanup function when leaving the page
+    return () => {
+      document.body.style.overflow = 'unset';
+    };
   }, [selectedService]);
 
   const services = [
@@ -48,7 +65,12 @@ export default function Services() {
 
   return (
     <section className="services-section">
-      <div className="services-container">
+      {/* Added a 'key' to force re-render if needed, and data-aos for animation */}
+      <div 
+        className="services-container" 
+        data-aos="fade-up"
+        key="services-content-wrapper" 
+      >
         <div className="services-header">
           <h2 className="minimal-title">Our Services</h2>
           <p className="minimal-subtitle">Premium beauty care tailored for you</p>
@@ -61,7 +83,10 @@ export default function Services() {
           loop={true}
           autoplay={{ delay: 5000 }}
           navigation={{ nextEl: '.custom-next', prevEl: '.custom-prev' }}
-          breakpoints={{ 640: { slidesPerView: 2 }, 1024: { slidesPerView: 3 } }}
+          breakpoints={{ 
+            640: { slidesPerView: 2 }, 
+            1024: { slidesPerView: 3 } 
+          }}
           className="services-swiper"
         >
           {services.map((service, index) => (
@@ -87,9 +112,10 @@ export default function Services() {
         </Swiper>
       </div>
 
+      {/* Modal Section */}
       {selectedService && (
         <div className="minimal-modal-overlay" onClick={() => setSelectedService(null)}>
-          <div className="minimal-modal" onClick={e => e.stopPropagation()}>
+          <div className="minimal-modal" onClick={e => e.stopPropagation()} data-aos="zoom-in" data-aos-duration="300">
             <button className="modal-close" onClick={() => setSelectedService(null)}><X /></button>
             <img src={selectedService.img} alt={selectedService.title} className="modal-img" />
             <div className="modal-body">

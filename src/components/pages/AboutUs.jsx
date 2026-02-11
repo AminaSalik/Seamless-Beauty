@@ -72,11 +72,7 @@ export default function About() {
              GlowApp is a simple and elegant appointment booking platform designed to turn visitors into real clients. 
         We believe that your journey to beauty should be as effortless as the result itself.
             </p>
-            <div className="hero-buttons">
-              <button className="btn btn-primary" onClick={scrollToBooking}>
-                Booking Now
-              </button>
-            </div>
+         
           </div>
 
           <div className="hero-visual">

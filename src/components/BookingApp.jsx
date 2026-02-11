@@ -26,23 +26,25 @@ function BookingApp() {
     const [toastMessage, setToastMessage] = useState({ text: "", isError: false });
     const [errors, setErrors] = useState({});
     const [adminHolidays, setAdminHolidays] = useState([]);
-    const [showScrollTop, setShowScrollTop] = useState(false); // Added for the arrow
+    const [showScrollTop, setShowScrollTop] = useState(false);
 
     const monthNames = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
 
-    // Monitor scroll to show/hide the "Back to Top" button
     useEffect(() => {
         const checkScroll = () => {
-            if (window.pageYOffset > 300) {
-                setShowScrollTop(true);
-            } else {
-                setShowScrollTop(false);
-            }
+            setShowScrollTop(window.pageYOffset > 300);
         };
         window.addEventListener('scroll', checkScroll);
+        
+        // Refresh AOS when component loads
+        if (window.AOS) {
+            window.AOS.refresh();
+        }
+
         return () => window.removeEventListener('scroll', checkScroll);
     }, []);
 
+    // ... (Keep all your existing logic: handleSendCode, handleVerifyAndBook, etc.)
     useEffect(() => {
         const q = query(collection(db, "holidays"));
         const unsubscribe = onSnapshot(q, (snap) => {
@@ -146,7 +148,6 @@ function BookingApp() {
         window.scrollTo({ top: 0, behavior: 'smooth' });
     };
 
-    // Calendar & Navigation Logic (Shortened for brevity as requested)
     const navigateMonth = (delta) => {
         let newMonth = currentMonth + delta;
         let newYear = currentYear;
@@ -186,7 +187,8 @@ function BookingApp() {
 
     return (
         <div className="booking-page-wrapper" id="booking-section">
-            <div className="booking-side-image">
+            {/* Slide in from the left */}
+            <div className="booking-side-image" data-aos="fade-right">
                 <div className="image-content-overlay">
                     <h1>Experience Excellence</h1>
                     <p>Secure your premium slot in just a few clicks.</p>
@@ -194,7 +196,8 @@ function BookingApp() {
             </div>
 
             <div className="booking-main-content">
-                <div className="booking-container glass-card">
+                {/* Slide in from the right */}
+                <div className="booking-container glass-card" data-aos="fade-left" data-aos-delay="200">
                     <header className="booking-header">
                         <h2 className="text-white">Appointment Booking</h2>
                         <div style={{ margin: '10px 0', textAlign: 'center' }}>
@@ -202,7 +205,7 @@ function BookingApp() {
                                 {selectedDate ? `${selectedDate} ${selectedTime ? `at ${formatTimeDisplay(selectedTime)}` : ''}` : 'Select a date and time'}
                             </p>
                         </div>
-                        {/* Progress Tracker UI remains the same... */}
+                        
                         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', margin: '20px 0', padding: '0 10px' }}>
                             {[{ id: 1, label: "Date" }, { id: 2, label: "Time" }, { id: 3, label: "Info" }, { id: 4, label: "Verify" }].map((s, idx, arr) => (
                                 <React.Fragment key={s.id}>
@@ -222,9 +225,9 @@ function BookingApp() {
                         </div>
                     </header>
 
-                    {/* Steps 1, 2, 3, 4 logic remains largely the same... */}
+                    {/* Content Steps */}
                     {step === 1 && (
-                        <div className="booking-card-inner">
+                        <div className="booking-card-inner" data-aos="fade-in">
                             <div className="booking-calendar-header">
                                 <button onClick={() => navigateMonth(-1)}>&lt;</button>
                                 <h3 className="text-white">{monthNames[currentMonth]} {currentYear}</h3>
@@ -246,7 +249,7 @@ function BookingApp() {
                     )}
 
                     {step === 2 && (
-                        <div className="booking-card-inner">
+                        <div className="booking-card-inner" data-aos="fade-in">
                             <div className="booking-inner-header">
                                 <h3 className="text-white">Select Time</h3>
                                 <button className="back-link" onClick={() => setStep(1)}>Change Date</button>
@@ -262,7 +265,7 @@ function BookingApp() {
                     )}
 
                     {step === 3 && (
-                        <div className="booking-card-inner">
+                        <div className="booking-card-inner" data-aos="fade-in">
                             <div className="booking-inner-header">
                                 <h3 className="text-white">Your Details</h3>
                                 <button className="back-link" onClick={() => setStep(2)}>Back</button>
@@ -280,7 +283,7 @@ function BookingApp() {
                     )}
 
                     {step === 4 && (
-                        <div className="booking-card-inner">
+                        <div className="booking-card-inner" data-aos="fade-in">
                             <div className="booking-inner-header">
                                 <h3 className="text-white">Enter OTP</h3>
                                 <button className="back-link" onClick={() => setStep(3)}>Back</button>
@@ -296,7 +299,7 @@ function BookingApp() {
                 </div>
             </div>
 
-            {/* NEW BACK TO TOP BUTTON */}
+            {/* Back to Top Button */}
             <a
                 href="#"
                 onClick={scrollToTop}
@@ -307,7 +310,7 @@ function BookingApp() {
                 </svg>
             </a>
 
-            {/* Toast Notification remains the same... */}
+            {/* Toast */}
             <div className={`booking-toast-notification ${showToast ? 'booking-show' : ''}`} style={{ backgroundColor: toastMessage.isError ? '#e63946' : '#2a9d8f', color: '#fff', padding: '12px 20px', borderRadius: '8px', display: 'flex', alignItems: 'center', gap: '12px', boxShadow: '0 4px 15px rgba(0,0,0,0.2)' }}>
                 <div style={{ backgroundColor: 'rgba(255,255,255,0.2)', width: '25px', height: '25px', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                     {toastMessage.isError ? '!' : '✓'}

@@ -20,38 +20,7 @@ export default function Services() {
   return (
     <>
       <Nav />
-      {/* <section className="hero">
-        <div className="hero-background">
-          <div className="gradient-bg" />
-          <div className="floating-shapes">
-            {[1, 2, 3, 4, 5, 6].map((i) => (
-              <div key={i} className={`shape shape-${i}`} />
-            ))}
-          </div>
-        </div>
-
-        <div className="hero-content">
-          <div className="hero-text animate-on-scroll">
-            <h1 className="hero-title">
-              <span className="title-line">Services</span>
-            </h1>
-            <p className="hero-description">
-              A simple and elegant appointment booking page designed to turn visitors into real clients.
-            </p>
-          </div>
-
-          <div className="hero-visual animate-on-scroll">
-            <div className="hero-image-wrapper" id="centralOrb">
-              <img src={Booking} alt="Hero Visual" className="hero-image" />
-            </div>
-          </div>
-        </div>
-
-        <div className="scroll-indicator">
-          <div className="scroll-arrow" />
-          <span>Scroll to explore</span>
-        </div>
-      </section> */}
+     
 
           <section className="hero">
         <div className="hero-background">
@@ -73,11 +42,7 @@ export default function Services() {
           Experience a collection of premium beauty treatments designed to enhance your natural beauty. 
     From professional makeup to luxury skincare, we ensure every detail is as effortless as it is elegant.
             </p>
-            <div className="hero-buttons">
-              <button className="btn btn-primary" onClick={scrollToBooking}>
-                Booking Now
-              </button>
-            </div>
+           
           </div>
 
           <div className="hero-visual">

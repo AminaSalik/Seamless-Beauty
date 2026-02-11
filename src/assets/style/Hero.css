@@ -31,7 +31,6 @@
 
 .glass-hero-card:hover {
   transform: translateY(-10px) scale(1.02);
-  border-color: var(--gold);
   background: rgba(59, 35, 35, 0.6);
   box-shadow: 0 15px 40px rgba(212, 175, 55, 0.2);
 }

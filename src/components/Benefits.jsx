@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Clock, MessageCircle, CheckCircle } from 'lucide-react';
 import "../assets/style/Benefits.css";
 
@@ -24,17 +24,33 @@ const cardsData = [
 ];
 
 export default function Benefits() {
+  
+  useEffect(() => {
+    // Force AOS à recalculer les positions dès que ce composant est affiché
+    if (window.AOS) {
+      window.AOS.refresh();
+    }
+  }, []);
+
   return (
     <section className="benefits-section">
       <div className="benefits-container">
-        <div className="benefits-header">
+        
+        {/* En-tête qui descend doucement */}
+        <div className="benefits-header" data-aos="fade-down">
           <h2 className="minimal-title">Why Choose <span className="pink-accent">GlowApp</span></h2>
           <p className="minimal-subtitle">The modern way to manage your beauty routine</p>
         </div>
 
         <div className="benefits-grid">
           {cardsData.map((card, index) => (
-            <div className="minimal-benefit-card" key={index}>
+            <div 
+              className="minimal-benefit-card" 
+              key={index}
+              data-aos="fade-up" // Animation de montée
+              data-aos-delay={index * 200} // Délai progressif (0ms, 200ms, 400ms)
+              data-aos-anchor-placement="top-bottom"
+            >
               <div className="benefit-icon-wrapper">
                 {card.icon}
               </div>
