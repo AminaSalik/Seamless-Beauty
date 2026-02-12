@@ -8,7 +8,8 @@ export default function ProblemSolution() {
   const imgs = {
     stress: "https://images.unsplash.com/photo-1560750588-73207b1ef5b8?q=80&w=1000&auto=format&fit=crop",
     glow: "https://images.pexels.com/photos/3757942/pexels-photo-3757942.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
-    salon: "https://images.pexels.com/photos/2533266/pexels-photo-2533266.jpeg?auto=compress&cs=tinysrgb&w=1000"
+    // This is your stationary background image
+    heroBg: "https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?q=80&w=2087&auto=format&fit=crop" 
   }
 
   useEffect(() => {
@@ -26,9 +27,13 @@ export default function ProblemSolution() {
     <div className="ps-page">
       <Nav />
 
-      {/* Modern Hero */}
-      <section className="ps-hero">
-        <div className="liquid-blur"></div>
+      {/* Modern Hero with Stationary Background */}
+      <section 
+        className="ps-hero" 
+        style={{ backgroundImage: `url(${imgs.heroBg})` }}
+      >
+        <div className="ps-hero-overlay"></div>
+        
         <div className="ps-hero-content reveal">
           <div className="tagline-pill">The Evolution of Booking</div>
           <h1 className="display-text">
@@ -42,7 +47,7 @@ export default function ProblemSolution() {
         </div>
       </section>
 
-      {/* Feature Section */}
+      {/* Feature Section - This will scroll OVER the hero */}
       <section className="feature-reveal-section">
         <div className="ps-container">
           
@@ -50,7 +55,6 @@ export default function ProblemSolution() {
             <h2 className="display-text-small">Beauty Should Be <span className="gradient-text">Effortless</span></h2>
           </div>
 
-          {/* Feature 1: The Problem/Solution Split */}
           <div className="feature-row reveal">
             <div className="feature-text">
               <span className="feature-tag">The Routine</span>
@@ -72,7 +76,6 @@ export default function ProblemSolution() {
             </div>
           </div>
 
-          {/* Feature 2: Reverse Layout */}
           <div className="feature-row reverse reveal">
              <div className="feature-image">
               <div className="image-glow-wrap accent-glow">

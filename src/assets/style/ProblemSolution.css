@@ -1,4 +1,6 @@
-/* --- BASE STYLING --- */
+/* ============================================================
+   1. BASE & LAYOUT
+   ============================================================ */
 .ps-page {
   background-color: #000;
   color: #fff;
@@ -12,73 +14,148 @@
   padding: 0 40px;
 }
 
-/* --- HERO SECTION --- */
+/* ============================================================
+   2. MOBILE-FRIENDLY STATIONARY HERO
+   ============================================================ */
 .ps-hero {
-  min-height: 80vh;
+  min-height: 100vh;
   display: flex;
   align-items: center;
   justify-content: center;
   text-align: center;
   position: relative;
+  background: transparent; /* Background is handled by pseudo-element */
   padding: 100px 20px;
+  z-index: 1;
+}
+
+/* THE STATIONARY IMAGE (Works on Mobile + Desktop) */
+.ps-hero::before {
+  content: "";
+  position: fixed; /* Pins image to viewport */
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  /* Using your hero image */
+  background-image: url('https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?q=80&w=2087&auto=format&fit=crop');
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  z-index: -1; /* Sits behind everything */
+  will-change: transform; /* Smoothness optimization */
+}
+
+/* Glossy Gradient Overlay */
+.ps-hero-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    to bottom,
+    rgba(0, 0, 0, 0.4) 0%,
+    rgba(0, 0, 0, 0.6) 70%,
+    #000000 100%
+  );
+  backdrop-filter: blur(1px);
+  z-index: 2;
+}
+
+.ps-hero-content {
+  position: relative;
+  z-index: 10;
+}
+
+/* ============================================================
+   3. TYPOGRAPHY & TAGS
+   ============================================================ */
+.tagline-pill {
+    background: rgba(200, 96, 137, 0.15);
+    border: 1px solid rgba(200, 96, 137, 0.3);
+    padding: 8px 24px;
+    border-radius: 100px;
+    display: inline-block;
+    font-size: 0.8rem;
+    font-weight: 700;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: #c86089;
+    margin-bottom: 25px;
+    backdrop-filter: blur(10px);
+}
+
+.display-text {
+    font-size: clamp(2.5rem, 8vw, 5.5rem);
+    font-weight: 900;
+    line-height: 1;
+    letter-spacing: -3px;
+}
+
+.text-stroke {
+    -webkit-text-stroke: 1px rgba(255,255,255,0.4);
+    color: transparent;
+}
+
+.gradient-text {
+    background: linear-gradient(to right, #c86089, #f472b6);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
 }
 
 .hero-sub {
-  max-width: 600px;
-  margin: 25px auto;
-  color: #888;
+  max-width: 620px;
+  margin: 30px auto;
+  color: rgba(255,255,255,0.6);
   font-size: 1.2rem;
   line-height: 1.6;
 }
 
-/* --- FEATURE REVEAL SECTION --- */
+/* ============================================================
+   4. SCROLLING OVER SECTION (Black Curtain)
+   ============================================================ */
 .feature-reveal-section {
-  padding: 100px 0;
+  position: relative;
+  z-index: 5; /* Moves this above the fixed background */
+  background: #000; /* Solid black hides the hero image as you scroll */
+  padding: 120px 0;
 }
 
 .section-title {
   text-align: center;
-  margin-bottom: 100px;
+  margin-bottom: 120px;
 }
 
 .display-text-small {
-  font-size: 3.5rem;
+  font-size: clamp(2.2rem, 5vw, 3.5rem);
   font-weight: 800;
   letter-spacing: -2px;
 }
 
-/* --- FEATURE ROWS --- */
 .feature-row {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 80px;
   align-items: center;
-  margin-bottom: 150px;
+  margin-bottom: 180px;
 }
 
-.feature-row.reverse {
-  direction: ltr; /* Ensure layout stays correct */
-}
-
-.feature-row.reverse .feature-text {
-    order: 2;
-}
-.feature-row.reverse .feature-image {
-    order: 1;
-}
+.feature-row.reverse .feature-text { order: 2; }
+.feature-row.reverse .feature-image { order: 1; }
 
 .feature-tag {
   color: #c86089;
   text-transform: uppercase;
   letter-spacing: 4px;
-  font-size: 0.8rem;
+  font-size: 0.85rem;
   font-weight: 700;
   margin-bottom: 20px;
   display: block;
 }
 
 .feature-text h3 {
-  font-size: 3rem;
+  font-size: clamp(2.2rem, 4vw, 3rem);
   font-weight: 800;
   line-height: 1.1;
   margin-bottom: 20px;
@@ -90,7 +167,9 @@
   margin-bottom: 40px;
 }
 
-/* --- GLASS BENEFIT CARDS --- */
+/* ============================================================
+   5. GLASS CARDS & REVEAL
+   ============================================================ */
 .glass-benefit {
   background: rgba(255, 255, 255, 0.03);
   border: 1px solid rgba(255, 255, 255, 0.08);
@@ -98,51 +177,13 @@
   border-radius: 24px;
   display: flex;
   gap: 20px;
-  backdrop-filter: blur(10px);
-  transition: transform 0.3s ease;
+  backdrop-filter: blur(15px);
+  transition: transform 0.4s ease;
 }
 
 .glass-benefit:hover {
     transform: translateX(10px);
     border-color: rgba(200, 96, 137, 0.4);
-}
-
-.benefit-icon {
-  font-size: 1.5rem;
-  color: #c86089;
-}
-
-.glass-benefit h4 {
-  margin: 0 0 5px 0;
-  font-size: 1.1rem;
-  color: #fff;
-}
-
-.glass-benefit p {
-  margin: 0;
-  font-size: 0.9rem;
-  color: #777;
-}
-
-/* --- IMAGE STYLING --- */
-.image-glow-wrap {
-  position: relative;
-  border-radius: 40px;
-  padding: 10px;
-  background: linear-gradient(145deg, rgba(255,255,255,0.1), transparent);
-}
-
-.image-glow-wrap::before {
-  content: '';
-  position: absolute;
-  inset: -20px;
-  background: radial-gradient(circle, rgba(200, 96, 137, 0.2) 0%, transparent 70%);
-  z-index: -1;
-  border-radius: 50%;
-}
-
-.accent-glow::before {
-  background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 0%, transparent 70%);
 }
 
 .image-glow-wrap img {
@@ -154,7 +195,7 @@
   box-shadow: 0 40px 100px rgba(0,0,0,0.8);
 }
 
-/* --- REVEAL ANIMATIONS --- */
+/* Scroll Reveal States */
 .reveal {
   opacity: 0;
   transform: translateY(40px);
@@ -166,7 +207,9 @@
   transform: translateY(0);
 }
 
-/* --- RESPONSIVE --- */
+/* ============================================================
+   6. RESPONSIVE DESIGN
+   ============================================================ */
 @media (max-width: 1024px) {
   .feature-row {
     grid-template-columns: 1fr;
@@ -181,10 +224,6 @@
     text-align: left;
     max-width: 500px;
     margin: 0 auto;
-  }
-
-  .display-text-small {
-      font-size: 2.5rem;
   }
 }
 

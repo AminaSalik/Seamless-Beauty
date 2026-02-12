@@ -1,0 +1,218 @@
+.modern-footer {
+  position: relative;
+  background: #000;
+  color: #fff;
+  padding: 80px 0 30px 0;
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
+  overflow: hidden;
+  z-index: 10; /* Ensures it stays above the stationary background */
+}
+
+/* Subtle pink glow at the top of the footer */
+.footer-glow {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 50%;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, #c86089, transparent);
+  box-shadow: 0 0 30px rgba(200, 96, 137, 0.4);
+}
+
+.footer-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 40px;
+}
+
+.footer-top {
+  display: grid;
+  grid-template-columns: 1.5fr 2fr 1.5fr;
+  gap: 60px;
+  margin-bottom: 60px;
+}
+
+/* --- BRANDING --- */
+.footer-logo {
+  font-size: 1.8rem;
+  font-weight: 900;
+  letter-spacing: 2px;
+  margin-bottom: 20px;
+}
+
+.footer-logo span {
+  color: #c86089;
+}
+
+.footer-tagline {
+  color: rgba(255, 255, 255, 0.5);
+  line-height: 1.6;
+  font-size: 0.95rem;
+  margin-bottom: 25px;
+}
+
+.social-links {
+  display: flex;
+  gap: 15px;
+}
+
+.social-links a {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.05);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  font-size: 1.1rem;
+  transition: all 0.3s ease;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.social-links a:hover {
+  background: #c86089;
+  transform: translateY(-5px);
+  box-shadow: 0 10px 20px rgba(200, 96, 137, 0.3);
+}
+
+/* --- LINKS --- */
+.footer-links-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 40px;
+}
+
+.link-group h4, .footer-newsletter h4 {
+  font-size: 1rem;
+  font-weight: 700;
+  margin-bottom: 25px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.link-group ul {
+  list-style: none;
+  padding: 0;
+}
+
+.link-group ul li {
+  margin-bottom: 12px;
+}
+
+.link-group a {
+  color: rgba(255, 255, 255, 0.6);
+  text-decoration: none;
+  transition: color 0.3s ease;
+  font-size: 0.95rem;
+}
+
+.link-group a:hover {
+  color: #c86089;
+}
+
+/* --- NEWSLETTER --- */
+.footer-newsletter p {
+  color: rgba(255, 255, 255, 0.5);
+  font-size: 0.9rem;
+  margin-bottom: 20px;
+}
+
+.subscribe-box {
+  display: flex;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 5px;
+  border-radius: 100px;
+}
+
+.subscribe-box input {
+  background: transparent;
+  border: none;
+  padding: 10px 20px;
+  color: #fff;
+  outline: none;
+  width: 100%;
+}
+
+.subscribe-box button {
+  background: #c86089;
+  color: #fff;
+  border: none;
+  padding: 10px 25px;
+  border-radius: 100px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: opacity 0.3s ease;
+}
+
+.subscribe-box button:hover {
+  opacity: 0.9;
+}
+
+/* --- BOTTOM BAR --- */
+.footer-bottom {
+  padding-top: 30px;
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.footer-bottom p {
+  color: rgba(255, 255, 255, 0.3);
+  font-size: 0.85rem;
+}
+
+.back-to-top {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: #fff;
+  width: 45px;
+  height: 45px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.back-to-top:hover {
+  border-color: #c86089;
+  color: #c86089;
+}
+
+/* --- RESPONSIVE --- */
+@media (max-width: 1024px) {
+  .footer-top {
+    grid-template-columns: 1fr 1fr;
+    gap: 40px;
+  }
+  .footer-newsletter {
+    grid-column: span 2;
+    max-width: 500px;
+  }
+}
+
+@media (max-width: 768px) {
+  .footer-top {
+    grid-template-columns: 1fr;
+    text-align: center;
+  }
+  .footer-newsletter {
+    grid-column: span 1;
+    margin: 0 auto;
+  }
+  .social-links {
+    justify-content: center;
+  }
+  .subscribe-box {
+    max-width: 100%;
+  }
+  .footer-bottom {
+    flex-direction: column-reverse;
+    gap: 20px;
+  }
+}
