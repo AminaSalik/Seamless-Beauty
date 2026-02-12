@@ -1,36 +1,71 @@
-import React, { useState, useEffect } from 'react';
-import { Swiper, SwiperSlide } from 'swiper/react';
-import { Autoplay, Pagination, Navigation } from 'swiper/modules';
-import { Sparkles, Scissors, Wind, Heart, ChevronLeft, ChevronRight, X } from 'lucide-react';
+import React, { useState,useRef, useEffect } from 'react';
+import { Sparkles, Scissors, Wind, Heart } from 'lucide-react';
+import "../assets/style/Services.css";
 
-// Swiper Styles
 import 'swiper/css';
 import 'swiper/css/pagination';
 import 'swiper/css/navigation';
 import '../assets/style/Services.css';
 
+
+const servicesData = [
+  {
+    id: 1,
+    title: "Sculpted Hair Art",
+    desc: "Precision cutting meets avant-garde styling. We treat every strand as a masterpiece of geometry and flow.",
+    longDesc: "Our master stylists use a combination of dry-cutting and molecular hair treatments to ensure your style lasts for weeks, not days. Includes a deep-scalp massage and signature finish.",
+    img: "https://images.pexels.com/photos/3993444/pexels-photo-3993444.jpeg?auto=compress&cs=tinysrgb&w=800",
+    price: "$95"
+  },
+  {
+    id: 2,
+    title: "Dermal Luminescence",
+    desc: "High-tech skincare treatments designed to restore your natural glow through deep hydration.",
+    longDesc: "Using non-invasive LED therapy and organic enzymes, we target the deeper layers of the dermis to pull out impurities and lock in moisture for a 2062-ready radiance.",
+    img: "https://images.pexels.com/photos/3762466/pexels-photo-3762466.jpeg?auto=compress&cs=tinysrgb&w=800",
+    price: "$140"
+  },
+  {
+    id: 3,
+    title: "Chroma Coloration",
+    desc: "Luxury hair coloring that uses silk-infused dyes for multidimensional, healthy shine.",
+    longDesc: "Our colorists specialize in balayage and corrective color. We use bond-builders in every step to ensure your hair stays stronger than when you arrived.",
+    img: "https://images.pexels.com/photos/973401/pexels-photo-973401.jpeg?auto=compress&cs=tinysrgb&w=800",
+    price: "$180"
+  },
+  {
+    id: 4,
+    title: "Atmospheric Makeup",
+    desc: "Makeup artistry designed for 8K resolution and real-world perfection.",
+    longDesc: "Whether it's for a high-profile event or a personal transformation, our artists use airbrush techniques and premium minerals for a weightless, flawless finish.",
+    img: "https://images.pexels.com/photos/457701/pexels-photo-457701.jpeg?auto=compress&cs=tinysrgb&w=800",
+    price: "$110"
+  }
+];
 export default function Services() {
   const [selectedService, setSelectedService] = useState(null);
+  const sliderRef = useRef(null);
 
-  useEffect(() => {
-    // 1. Initialize or Refresh AOS when the component mounts
-    if (window.AOS) {
-      window.AOS.init({
-        duration: 1000,
-        once: true,
-        offset: 100,
+ useEffect(() => {
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) entry.target.classList.add('reveal-active');
       });
-      window.AOS.refresh(); // Crucial for SPAs
-    }
+    }, { threshold: 0.1 });
 
-    // 2. Handle body scroll when modal is open
-    document.body.style.overflow = selectedService ? 'hidden' : 'unset';
-    
-    // Cleanup function when leaving the page
-    return () => {
-      document.body.style.overflow = 'unset';
-    };
-  }, [selectedService]);
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+    return () => observer.disconnect();
+  }, []);
+
+   const scroll = (direction) => {
+    const { current } = sliderRef;
+    if (direction === 'left') {
+      current.scrollBy({ left: -400, behavior: 'smooth' });
+    } else {
+      current.scrollBy({ left: 400, behavior: 'smooth' });
+    }
+  };
+
 
   const services = [
     {
@@ -64,64 +99,60 @@ export default function Services() {
   ];
 
   return (
-    <section className="services-section">
-      {/* Added a 'key' to force re-render if needed, and data-aos for animation */}
-      <div 
-        className="services-container" 
-        data-aos="fade-up"
-        key="services-content-wrapper" 
-      >
-        <div className="services-header">
-          <h2 className="minimal-title">Our Services</h2>
-          <p className="minimal-subtitle">Premium beauty care tailored for you</p>
+    <section className="services-v3">
+      <div className="services-v3-container">
+        
+        {/* Header with Navigation Buttons */}
+        <div className="services-v3-header reveal">
+          <div className="header-left">
+            <span className="tagline-pill">Exclusive Catalog</span>
+            <h2 className="display-text">Curated <span className="gradient-text">Beauty</span></h2>
+          </div>
+          <div className="slider-controls">
+            <button onClick={() => scroll('left')} className="control-btn">←</button>
+            <button onClick={() => scroll('right')} className="control-btn">→</button>
+          </div>
         </div>
 
-        <Swiper
-          modules={[Autoplay, Pagination, Navigation]}
-          spaceBetween={20}
-          slidesPerView={1}
-          loop={true}
-          autoplay={{ delay: 5000 }}
-          navigation={{ nextEl: '.custom-next', prevEl: '.custom-prev' }}
-          breakpoints={{ 
-            640: { slidesPerView: 2 }, 
-            1024: { slidesPerView: 3 } 
-          }}
-          className="services-swiper"
-        >
-          {services.map((service, index) => (
-            <SwiperSlide key={index}>
-              <div className="minimal-card" onClick={() => setSelectedService(service)}>
-                <div className="minimal-img-wrapper">
-                  <img src={service.img} alt={service.title} />
-                </div>
-                <div className="minimal-info">
-                  <div className="minimal-icon">{service.icon}</div>
-                  <h3>{service.title}</h3>
-                  <p>{service.desc}</p>
-                  <span className="learn-more-link">Learn More →</span>
-                </div>
+        {/* The Horizontal Slider */}
+        <div className="services-slider" ref={sliderRef}>
+          {servicesData.map((service, index) => (
+            <div key={service.id} className={`service-slide-card reveal delay-${index + 1}`}>
+              <div className="card-img-box">
+                <img src={service.img} alt={service.title} />
+                <div className="slide-price">{service.price}</div>
               </div>
-            </SwiperSlide>
+              <div className="card-body">
+                <h3>{service.title}</h3>
+                <p>{service.desc}</p>
+                <button 
+                  className="learn-more-btn" 
+                  onClick={() => setSelectedService(service)}
+                >
+                  Explore Service
+                </button>
+              </div>
+            </div>
           ))}
-
-          <div className="minimal-nav">
-            <button className="custom-prev"><ChevronLeft size={20} /></button>
-            <button className="custom-next"><ChevronRight size={20} /></button>
-          </div>
-        </Swiper>
+        </div>
       </div>
 
-      {/* Modal Section */}
+      {/* MODERN MODAL */}
       {selectedService && (
-        <div className="minimal-modal-overlay" onClick={() => setSelectedService(null)}>
-          <div className="minimal-modal" onClick={e => e.stopPropagation()} data-aos="zoom-in" data-aos-duration="300">
-            <button className="modal-close" onClick={() => setSelectedService(null)}><X /></button>
-            <img src={selectedService.img} alt={selectedService.title} className="modal-img" />
-            <div className="modal-body">
-              <h2>{selectedService.title}</h2>
-              <p>{selectedService.fullDetails}</p>
-              <button className="modal-btn" onClick={() => setSelectedService(null)}>Back to Services</button>
+        <div className="service-modal-overlay" onClick={() => setSelectedService(null)}>
+          <div className="service-modal" onClick={e => e.stopPropagation()}>
+            <button className="close-modal" onClick={() => setSelectedService(null)}>&times;</button>
+            <div className="modal-grid">
+              <div className="modal-img-wrapper">
+                <img src={selectedService.img} alt={selectedService.title} />
+              </div>
+              <div className="modal-text">
+                <span className="pink-accent">Premium Experience</span>
+                <h2>{selectedService.title}</h2>
+                <div className="modal-price">{selectedService.price}</div>
+                <p>{selectedService.longDesc}</p>
+                <button className="book-now-btn">Secure Appointment</button>
+              </div>
             </div>
           </div>
         </div>

@@ -1,436 +1,222 @@
-:root {
-    --glass-bg: rgba(59, 35, 35, 0.55);
-    /* اللون المطلوب مع شفافية */
-    --gold-gradient: linear-gradient(135deg, #d4af37, #aa8803);
-    --gold-light: #d4af37;
-    --text-light: #ffffff;
-    --error-red: #ff4d4d;
+/* --- AUTOFILL FIX: FORCES GLASS LOOK EVEN WHEN AUTOCOMPLETED --- */
+input:-webkit-autofill,
+input:-webkit-autofill:hover, 
+input:-webkit-autofill:focus, 
+input:-webkit-autofill:active {
+    /* This transition trick hides the white background */
+    -webkit-transition: background-color 5000s ease-in-out 0s;
+    transition: background-color 5000s ease-in-out 0s;
+    
+    /* This makes the text stay white */
+    -webkit-text-fill-color: #fff !important;
+    
+    /* This keeps your glass border visible */
+    border: 1px solid rgba(255, 255, 255, 0.1) !important;
+    caret-color: white;
 }
 
-/* Add to your existing Booking.css */
-
-/* Phone Input Custom Styling */
-.phone-input-field {
-    width: 100% !important;
-    background: rgba(255, 255, 255, 0.1) !important;
-    border: 1px solid rgba(255, 255, 255, 0.2) !important;
-    color: white !important;
-    height: 45px !important;
-    border-radius: 8px !important;
-}
-
-.phone-dropdown-btn {
-    background: rgba(255, 255, 255, 0.1) !important;
-    border: 1px solid rgba(255, 255, 255, 0.2) !important;
-}
-
-/* Error Styles */
-.error-text {
-    color: #ff4d4d;
-    font-size: 12px;
-    margin-top: 5px;
-    display: block;
-}
-
-.error-border {
-    border: 1px solid #ff4d4d !important;
+/* Specific fix for the phone input container if it flashes white */
+.phone-v2-container input:-webkit-autofill {
+    -webkit-box-shadow: 0 0 0px 1000px transparent inset !important;
 }
 
 
-.booking-form-row {
-    display: flex;
-    gap: 15px;
-}
 
-.booking-form-row .booking-form-group {
-    flex: 1;
-}
 
-/* Phone Input Container */
-.phone-input-container {
-    display: flex;
-    background: rgba(255, 255, 255, 0.05);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    border-radius: 12px;
-    overflow: hidden;
-    transition: 0.3s;
-}
 
-.phone-input-container:focus-within {
-    border-color: var(--gold-light);
-    background: rgba(255, 255, 255, 0.1);
-}
 
-.country-select {
-    background: rgba(255, 255, 255, 0.1);
-    border: none;
-    color: white;
-    padding: 0 10px;
-    outline: none;
-    cursor: pointer;
-    font-size: 0.9rem;
-    border-right: 1px solid rgba(255, 255, 255, 0.1);
-}
-
-.country-select option {
-    background: #3b2323;
-    /* Match your glass color */
-    color: white;
-}
-
-.phone-input {
-    flex: 1;
-    background: transparent !important;
-    border: none !important;
-    padding: 14px !important;
-}
-
-/* Small validation text */
-small {
-    display: block;
-    margin-top: 5px;
-    font-size: 0.75rem;
-}
-
-/* WhatsApp Floating Button */
-/* Back to Top Button */
-.scroll-top-btn {
-    position: fixed;
-    bottom: 30px;
-    right: 30px;
-    width: 50px;
-    height: 50px;
-    background-color: #3b2323;
-    /* Matching your theme */
-    color: #D4AF37;
-    /* Gold/Accent color */
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    text-decoration: none;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
-    z-index: 1000;
-    opacity: 0;
-    visibility: hidden;
-    transition: all 0.4s ease;
-    border: 1px solid rgba(212, 175, 55, 0.3);
-}
-
-.scroll-top-btn.visible {
-    opacity: 1;
-    visibility: visible;
-}
-
-.scroll-top-btn:hover {
-    transform: translateY(-5px);
-    background-color: #D4AF37;
-    color: #3b2323;
-}
-
-/* Mobile Adjustments */
-@media (max-width: 768px) {
-    .scroll-top-btn {
-        bottom: 20px;
-        right: 20px;
-        width: 45px;
-        height: 45px;
-    }
-}
-
-/* Page Layout */
-.booking-page-wrapper {
-    display: flex;
+.booking-v2-wrapper {
+    background: #000;
     min-height: 100vh;
-    background: #000000;
-    /* خلفية داكنة جداً لإبراز الزجاج */
+    padding-top: 80px;
+    color: #fff;
     overflow-x: hidden;
+    font-family: 'Inter', sans-serif;
 }
 
-/* Left Side: Image with Good Design */
-.booking-side-image {
-    flex: 1;
-    background-image: url('../img/Booking.png');
-    background-size: cover;
-    background-position: center;
-    position: relative;
-    clip-path: polygon(0 0, 100% 0, 80% 100%, 0% 100%);
-    /* الشكل المائل */
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 40px;
-}
-
-.image-content-overlay {
-    background: rgba(0, 0, 0, 0.4);
-    backdrop-filter: blur(8px);
-    padding: 30px;
-    border-radius: 20px;
-    color: white;
-    max-width: 400px;
-    border-left: 5px solid #d4af37;
-}
-
-/* Right Side: Content Area */
-.booking-main-content {
-    flex: 1.2;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 40px;
-}
-
-/* Glass Container */
-.glass-card {
-    background: var(--glass-bg);
-    backdrop-filter: blur(20px) saturate(160%);
-    -webkit-backdrop-filter: blur(20px) saturate(160%);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    border-radius: 35px;
-    padding: 40px;
-    width: 100%;
-    max-width: 550px;
-    box-shadow: 0 25px 50px rgba(0, 0, 0, 0.5);
-}
-
-/* Header & Steps */
-.booking-header h2 {
-    text-align: center;
-    font-size: 1.8rem;
-    margin-bottom: 25px;
-    letter-spacing: 1px;
-}
-
-.booking-steps-nav {
-    display: flex;
-    justify-content: center;
-    gap: 20px;
-    margin-bottom: 30px;
-}
-
-.booking-step-dot {
-    width: 35px;
-    height: 35px;
-    border-radius: 50%;
-    background: rgba(255, 255, 255, 0.1);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: white;
-    font-weight: bold;
-    transition: 0.3s;
-}
-
-.booking-step-dot.active {
-    background: var(--gold-gradient);
-    box-shadow: 0 0 15px rgba(212, 175, 55, 0.5);
-}
-
-/* Inner Card Styles */
-.booking-inner-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 15px;
-}
-
-.back-link {
-    background: none;
-    border: none;
-    color: var(--gold-light);
-    cursor: pointer;
-    text-decoration: underline;
-}
-
-.selection-info {
-    color: rgba(255, 255, 255, 0.7);
-    margin-bottom: 20px;
-}
-
-.selection-info.highlight {
-    background: rgba(212, 175, 55, 0.1);
-    padding: 10px;
-    border-radius: 10px;
-    color: var(--gold-light);
-    text-align: center;
-}
-
-/* Calendar & Days */
-.booking-calendar-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 20px;
-}
-
-.booking-calendar-header button {
-    background: rgba(255, 255, 255, 0.1);
-    border: none;
-    color: white;
-    padding: 8px 15px;
-    border-radius: 10px;
-    cursor: pointer;
-}
-
-.booking-weekdays {
+.booking-v2-hero {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 40px 20px;
     display: grid;
-    grid-template-columns: repeat(7, 1fr);
-    text-align: center;
-    color: rgba(255, 255, 255, 0.5);
-    font-size: 0.8rem;
-    margin-bottom: 10px;
+    grid-template-columns: 1fr 1.2fr;
+    gap: 40px;
+    align-items: start;
 }
 
-.booking-days {
-    display: grid;
-    grid-template-columns: repeat(7, 1fr);
-    gap: 8px;
+/* ============================================================
+   2. SELECTION PREVIEW & GLASS CARD
+   ============================================================ */
+.selection-preview { display: flex; gap: 10px; margin: 30px 0; }
+.preview-item {
+    background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(255,255,255,0.08);
+    padding: 12px 15px; border-radius: 15px; flex: 1;
 }
+.preview-item.active { border-color: #db2777; background: rgba(219,39,119,0.1); }
+.preview-item .label { display: block; font-size: 0.6rem; text-transform: uppercase; color: #777; letter-spacing: 1px; }
+.preview-item .val { font-weight: 700; font-size: 0.9rem; }
 
-.booking-day {
-    aspect-ratio: 1;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: 12px;
-    cursor: pointer;
-    font-size: 0.9rem;
-    color: white;
-    transition: 0.2s;
-}
-
-.booking-available {
-    background: rgba(255, 255, 255, 0.05);
-}
-
-.booking-available:hover {
-    background: rgba(212, 175, 55, 0.3);
-}
-
-.booking-unavailable {
-    color: #666;
-    cursor: not-allowed;
-}
-
-.booking-other-month {
-    opacity: 0.2;
-}
-
-.booking-selected {
-    background: var(--gold-gradient) !important;
-    color: #3b2323 !important;
-    font-weight: bold;
-}
-
-/* Time Slots Grid */
-.booking-time-slots-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
-    gap: 12px;
-    max-height: 300px;
-    overflow-y: auto;
-    padding-right: 10px;
-}
-
-.booking-time-slot {
-    padding: 12px;
-    text-align: center;
-    background: rgba(255, 255, 255, 0.05);
-    border-radius: 12px;
-    color: white;
-    cursor: pointer;
+.glass-concierge-card {
+    background: rgba(255, 255, 255, 0.02);
+    backdrop-filter: blur(25px);
+    -webkit-backdrop-filter: blur(25px);
     border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 30px; padding: 40px;
+    box-shadow: 0 40px 100px rgba(0,0,0,0.5);
 }
 
-.booking-time-slot.booking-available:hover {
-    border-color: var(--gold-light);
+/* ============================================================
+   3. NAVIGATION & CALENDAR
+   ============================================================ */
+.step-header { display: flex; align-items: center; gap: 15px; margin-bottom: 30px; }
+.icon-back-btn {
+    width: 44px; height: 44px; border-radius: 50%;
+    border: 1px solid rgba(255,255,255,0.1); background: rgba(255,255,255,0.05);
+    color: #fff; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: 0.3s;
+}
+.icon-back-btn:hover { background: #db2777; transform: translateX(-3px); }
+
+.cal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
+.cal-header button { background: none; border: 1px solid rgba(255,255,255,0.1); color: #fff; width: 35px; height: 35px; border-radius: 50%; }
+.week-grid { display: grid; grid-template-columns: repeat(7, 1fr); text-align: center; font-size: 0.75rem; color: #555; margin-bottom: 10px; }
+.days-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 6px; }
+.day-cell { aspect-ratio: 1; display: flex; align-items: center; justify-content: center; border-radius: 10px; cursor: pointer; transition: 0.2s; font-size: 0.9rem; }
+.day-cell.available { background: rgba(255,255,255,0.03); }
+.day-cell.available:hover { background: #db2777; }
+.day-cell.selected { background: #db2777 !important; font-weight: 800; }
+.day-cell.unavailable { opacity: 0.1; cursor: not-allowed; }
+
+/* ============================================================
+   4. TIME GRID & FORM INPUTS
+   ============================================================ */
+.time-grid-v2 { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; }
+.time-pill {
+    padding: 15px; text-align: center; background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(255,255,255,0.08); border-radius: 15px; cursor: pointer;
+}
+.time-pill.selected { background: #db2777; border-color: transparent; font-weight: 700; }
+
+.form-v2 { display: flex; flex-direction: column; gap: 12px; }
+.input-row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+input {
+    background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.1);
+    padding: 16px; border-radius: 12px; color: #fff; outline: none; width: 100%;
+}
+input:focus { border-color: #db2777; }
+
+/* ============================================================
+   5. ULTRA-MODERN PHONE INPUT (NO WHITE BOXES)
+   ============================================================ */
+.phone-v2-container { 
+    width: 100% !important; 
+    height: 55px !important; 
+    background: rgba(255,255,255,0.04) !important; 
+    border: 1px solid rgba(255,255,255,0.1) !important; 
+    border-radius: 12px !important; 
+    transition: all 0.3s ease;
 }
 
-/* Forms */
-.booking-form-group {
-    margin-bottom: 20px;
+.phone-v2-container:focus-within {
+    border-color: #db2777 !important;
+    background: rgba(255,255,255,0.07) !important;
 }
 
-.booking-form-group label {
-    display: block;
-    color: rgba(255, 255, 255, 0.8);
-    margin-bottom: 8px;
+.phone-v2-input { 
+    width: 100% !important; 
+    height: 100% !important; 
+    background: transparent !important; 
+    color: white !important; 
+    border: none !important; 
 }
 
-.booking-form-group input {
-    width: 100%;
-    padding: 14px;
-    background: rgba(255, 255, 255, 0.05);
+.phone-v2-button { 
+    background: transparent !important; 
+    border: none !important; 
+    border-right: 1px solid rgba(255,255,255,0.1) !important; 
+}
+
+.selected-flag { background: transparent !important; border-radius: 12px 0 0 12px !important; }
+
+/* The Floating Glass Dropdown */
+.phone-v2-dropdown { 
+    background: rgba(10, 10, 10, 0.98) !important; 
+    backdrop-filter: blur(25px) !important;
+    -webkit-backdrop-filter: blur(25px) !important;
+    color: #fff !important; 
+    border: 1px solid rgba(255, 255, 255, 0.1) !important;
+    border-radius: 20px !important;
+    margin-top: 10px !important;
+    padding: 10px !important;
+    box-shadow: 0 25px 60px rgba(0,0,0,0.9) !important;
+    scrollbar-width: thin;
+    scrollbar-color: #db2777 transparent;
+}
+
+/* Custom Scrollbar */
+.phone-v2-dropdown::-webkit-scrollbar { width: 4px; }
+.phone-v2-dropdown::-webkit-scrollbar-thumb { background: #db2777; border-radius: 10px; }
+
+/* List Item Modernization */
+.phone-v2-dropdown .country {
+    border-radius: 12px !important; 
+    padding: 10px 15px !important;
+    margin-bottom: 5px !important;
+    transition: 0.2s ease !important;
+}
+
+.phone-v2-dropdown .country:hover { 
+    background: rgba(255, 255, 255, 0.05) !important; 
+}
+
+/* Fix for that white highlight from your screenshot */
+.phone-v2-dropdown .country.highlight { 
+    background: #db2777 !important; 
+    color: #fff !important; 
+}
+
+/* ============================================================
+   6. BUTTONS & TOAST
+   ============================================================ */
+.confirm-main-btn {
+    background: #db2777; border: none; padding: 18px; border-radius: 15px;
+    color: #fff; font-weight: 800; cursor: pointer; margin-top: 10px;
+}
+
+.toast-modern {
+    position: fixed; bottom: 30px; right: 30px;
+    background: rgba(15, 15, 15, 0.85);
+    backdrop-filter: blur(15px);
     border: 1px solid rgba(255, 255, 255, 0.1);
-    border-radius: 12px;
-    color: white;
-    outline: none;
+    padding: 12px 24px; border-radius: 100px;
+    z-index: 9999; display: flex; flex-direction: column; overflow: hidden;
+    animation: toastSlideIn 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    min-width: 280px;
 }
 
-.booking-form-group input:focus {
-    border-color: var(--gold-light);
-    background: rgba(255, 255, 255, 0.1);
+.toast-content { display: flex; align-items: center; gap: 12px; }
+.toast-icon {
+    width: 24px; height: 24px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 0.8rem; font-weight: 900;
+}
+.toast-modern.success .toast-icon { background: #10b981; color: white; }
+.toast-modern.err .toast-icon { background: #ef4444; color: white; }
+.toast-progress { position: absolute; bottom: 0; left: 0; height: 3px; width: 100%; animation: toastProgress 4s linear forwards; }
+
+/* ============================================================
+   7. ANIMATIONS & RESPONSIVE
+   ============================================================ */
+@keyframes toastSlideIn { from { transform: translateY(100px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+@keyframes toastProgress { from { width: 100%; } to { width: 0%; } }
+
+@media (max-width: 1024px) {
+    .booking-v2-hero { grid-template-columns: 1fr; }
+    .display-text { font-size: 3rem; text-align: center; }
 }
 
-/* Buttons */
-.booking-confirm-btn {
-    width: 100%;
-    padding: 16px;
-    background: var(--gold-gradient);
-    border: none;
-    border-radius: 15px;
-    color: #3b2323;
-    font-weight: bold;
-    font-size: 1rem;
-    cursor: pointer;
-    transition: 0.3s;
-    margin-top: 10px;
-}
-
-.booking-confirm-btn:disabled {
-    opacity: 0.5;
-    cursor: not-allowed;
-}
-
-/* Toast */
-.booking-toast-notification {
-    position: fixed;
-    bottom: -250px;
-    left: 50%;
-    transform: translateX(-50%);
-    background: #4CAF50;
-    color: white;
-    padding: 15px 30px;
-    border-radius: 20px;
-    display: flex;
-    align-items: center;
-    gap: 15px;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
-    transition: 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-    z-index: 1000;
-}
-
-.booking-toast-notification.booking-show {
-    bottom: 30px;
-}
-
-/* Responsive */
-
-@media (max-width: 480px) {
-    .glass-card {
-        padding: 25px;
-        border-radius: 25px;
-    }
-}
-
-@media (max-width: 900px) {
-    .booking-page-wrapper {
-        flex-direction: column;
-    }
-
-    .booking-side-image {
-        min-height: 300px;
-        clip-path: polygon(0 0, 100% 0, 100% 85%, 0% 100%);
-    }
+@media (max-width: 768px) {
+    .glass-concierge-card { padding: 25px 20px; border-radius: 20px; }
+    .input-row { grid-template-columns: 1fr; }
+    .toast-modern { right: 20px; left: 20px; bottom: 20px; min-width: auto; justify-content: center; }
 }

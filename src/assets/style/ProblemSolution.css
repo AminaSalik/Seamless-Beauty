@@ -1,0 +1,195 @@
+/* --- BASE STYLING --- */
+.ps-page {
+  background-color: #000;
+  color: #fff;
+  font-family: 'Inter', sans-serif;
+  overflow-x: hidden;
+}
+
+.ps-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 40px;
+}
+
+/* --- HERO SECTION --- */
+.ps-hero {
+  min-height: 80vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  position: relative;
+  padding: 100px 20px;
+}
+
+.hero-sub {
+  max-width: 600px;
+  margin: 25px auto;
+  color: #888;
+  font-size: 1.2rem;
+  line-height: 1.6;
+}
+
+/* --- FEATURE REVEAL SECTION --- */
+.feature-reveal-section {
+  padding: 100px 0;
+}
+
+.section-title {
+  text-align: center;
+  margin-bottom: 100px;
+}
+
+.display-text-small {
+  font-size: 3.5rem;
+  font-weight: 800;
+  letter-spacing: -2px;
+}
+
+/* --- FEATURE ROWS --- */
+.feature-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 80px;
+  align-items: center;
+  margin-bottom: 150px;
+}
+
+.feature-row.reverse {
+  direction: ltr; /* Ensure layout stays correct */
+}
+
+.feature-row.reverse .feature-text {
+    order: 2;
+}
+.feature-row.reverse .feature-image {
+    order: 1;
+}
+
+.feature-tag {
+  color: #c86089;
+  text-transform: uppercase;
+  letter-spacing: 4px;
+  font-size: 0.8rem;
+  font-weight: 700;
+  margin-bottom: 20px;
+  display: block;
+}
+
+.feature-text h3 {
+  font-size: 3rem;
+  font-weight: 800;
+  line-height: 1.1;
+  margin-bottom: 20px;
+}
+
+.feature-text p {
+  color: #aaa;
+  font-size: 1.1rem;
+  margin-bottom: 40px;
+}
+
+/* --- GLASS BENEFIT CARDS --- */
+.glass-benefit {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  padding: 25px;
+  border-radius: 24px;
+  display: flex;
+  gap: 20px;
+  backdrop-filter: blur(10px);
+  transition: transform 0.3s ease;
+}
+
+.glass-benefit:hover {
+    transform: translateX(10px);
+    border-color: rgba(200, 96, 137, 0.4);
+}
+
+.benefit-icon {
+  font-size: 1.5rem;
+  color: #c86089;
+}
+
+.glass-benefit h4 {
+  margin: 0 0 5px 0;
+  font-size: 1.1rem;
+  color: #fff;
+}
+
+.glass-benefit p {
+  margin: 0;
+  font-size: 0.9rem;
+  color: #777;
+}
+
+/* --- IMAGE STYLING --- */
+.image-glow-wrap {
+  position: relative;
+  border-radius: 40px;
+  padding: 10px;
+  background: linear-gradient(145deg, rgba(255,255,255,0.1), transparent);
+}
+
+.image-glow-wrap::before {
+  content: '';
+  position: absolute;
+  inset: -20px;
+  background: radial-gradient(circle, rgba(200, 96, 137, 0.2) 0%, transparent 70%);
+  z-index: -1;
+  border-radius: 50%;
+}
+
+.accent-glow::before {
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 0%, transparent 70%);
+}
+
+.image-glow-wrap img {
+  width: 100%;
+  height: 500px;
+  object-fit: cover;
+  border-radius: 30px;
+  filter: saturate(1.1);
+  box-shadow: 0 40px 100px rgba(0,0,0,0.8);
+}
+
+/* --- REVEAL ANIMATIONS --- */
+.reveal {
+  opacity: 0;
+  transform: translateY(40px);
+  transition: all 1s cubic-bezier(0.2, 1, 0.3, 1);
+}
+
+.reveal-active {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* --- RESPONSIVE --- */
+@media (max-width: 1024px) {
+  .feature-row {
+    grid-template-columns: 1fr;
+    gap: 40px;
+    text-align: center;
+  }
+  
+  .feature-row.reverse .feature-text { order: 1; }
+  .feature-row.reverse .feature-image { order: 2; }
+
+  .glass-benefit {
+    text-align: left;
+    max-width: 500px;
+    margin: 0 auto;
+  }
+
+  .display-text-small {
+      font-size: 2.5rem;
+  }
+}
+
+@media (max-width: 768px) {
+    .image-glow-wrap img {
+        height: 350px;
+    }
+}
