@@ -3,7 +3,12 @@ import "../assets/style/Navbar.css";
 import Nav from "./Nav";
 
 
-const salonImg = "https://images.pexels.com/photos/2533266/pexels-photo-2533266.jpeg?auto=compress&cs=tinysrgb&w=1000";
+const imgs = {
+
+  heroBg: "https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?q=80&w=2087&auto=format&fit=crop"
+}
+
+
 
 export default function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -17,51 +22,31 @@ export default function Navbar() {
 
   return (
     <>
-      <Nav />
 
-      <section className="hero">
-        <div className="hero-background">
-          <div className="gradient-bg" />
-          <div className="floating-shapes">
-            {[1, 2, 3, 4, 5, 6].map((i) => (
-              <div key={i} className={`shape shape-${i}`} />
-            ))}
-          </div>
-        </div>
+      <div className="ps-page">
 
-        <div className="hero-content">
-          <div className="hero-text">
-            <h1 className="hero-title">
-      <span className="title-line">
-      Elevate Your <span className="pink-accent">Look</span>
-    </span>
-    <span className="title-line">
-      <span className="pink-accent">Define</span> Your Style
-    </span>
+        <Nav />
+        <section
+          className="ps-hero"
+          style={{ backgroundImage: `url(${imgs.heroBg})` }}
+        >
+          <div className="ps-hero-overlay"></div>
+
+          <div className="ps-hero-content reveal">
+            <div className="tagline-pill">The Evolution of Booking</div>
+            <h1 className="display-text">
+              Stop Chasing <span className="text-stroke">Appointments</span>, <br />
+              Start Enjoying the <span className="gradient-text">Glow</span>
             </h1>
-         <p className="hero-description">
-    Luxury hair and beauty treatments tailored just for you. Book your transformation in seconds.
-  </p>
-            <div className="hero-buttons">
-              <button className="btn btn-primary" onClick={scrollToBooking}>
-                Booking Now
-              </button>
-            </div>
+            <p className="hero-sub">
+              GlowApp removes the friction of traditional booking, providing a
+              space where your transformation is the only priority.
+            </p>
           </div>
+        </section>
 
-          <div className="hero-visual">
-            <div className="hero-image-wrapper" id="centralOrb">
-              {/* Updated the src here to use salonImg */}
-              <img src={salonImg} alt="Luxury Salon Interior" className="hero-image" />
-            </div>
-          </div>
-        </div>
+      </div>
 
-        <div className="scroll-indicator">
-          <div className="scroll-arrow" />
-          <span>Scroll to explore</span>
-        </div>
-      </section>
     </>
   );
 }

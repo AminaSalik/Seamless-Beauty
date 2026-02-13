@@ -5,7 +5,7 @@ import "../assets/style/Services.css";
 import 'swiper/css';
 import 'swiper/css/pagination';
 import 'swiper/css/navigation';
-import '../assets/style/Services.css';
+
 
 
 const servicesData = [
@@ -28,7 +28,7 @@ const servicesData = [
   {
     id: 3,
     title: "Chroma Coloration",
-    desc: "Luxury hair coloring that uses silk-infused dyes for multidimensional, healthy shine.",
+    desc: "Luxury hair coloring that uses silk-infused dyes for multidimensional, healthy shine Silk-Lustre Color Artistry .",
     longDesc: "Our colorists specialize in balayage and corrective color. We use bond-builders in every step to ensure your hair stays stronger than when you arrived.",
     img: "https://images.pexels.com/photos/973401/pexels-photo-973401.jpeg?auto=compress&cs=tinysrgb&w=800",
     price: "$180"
@@ -99,14 +99,14 @@ export default function Services() {
   ];
 
   return (
-    <section className="services-v3">
+    <section className="services-v3 feature-reveal-section">
       <div className="services-v3-container">
         
         {/* Header with Navigation Buttons */}
         <div className="services-v3-header reveal">
           <div className="header-left">
             <span className="tagline-pill">Exclusive Catalog</span>
-            <h2 className="display-text">Curated <span className="gradient-text">Beauty</span></h2>
+            <h2 className="display-text text-white">Curated <span className="gradient-text">Beauty</span></h2>
           </div>
           <div className="slider-controls">
             <button onClick={() => scroll('left')} className="control-btn">←</button>
@@ -124,7 +124,7 @@ export default function Services() {
               </div>
               <div className="card-body">
                 <h3>{service.title}</h3>
-                <p>{service.desc}</p>
+                <p className='text-white'>{service.desc}</p>
                 <button 
                   className="learn-more-btn" 
                   onClick={() => setSelectedService(service)}
@@ -147,10 +147,10 @@ export default function Services() {
                 <img src={selectedService.img} alt={selectedService.title} />
               </div>
               <div className="modal-text">
-                <span className="pink-accent">Premium Experience</span>
-                <h2>{selectedService.title}</h2>
+                <span  className="pink-accent text-white">Premium Experience</span>
+                <h2 className='text-white'>{selectedService.title}</h2>
                 <div className="modal-price">{selectedService.price}</div>
-                <p>{selectedService.longDesc}</p>
+                <p className='text-white'>{selectedService.longDesc}</p>
                 <button className="book-now-btn">Secure Appointment</button>
               </div>
             </div>

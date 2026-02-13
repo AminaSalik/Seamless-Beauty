@@ -1,3 +1,154 @@
+
+.ps-page {
+  background-color: #000;
+  color: #fff;
+  font-family: 'Inter', sans-serif;
+  overflow-x: hidden;
+}
+
+.ps-hero {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  position: relative;
+  background: transparent; /* Background is handled by pseudo-element */
+  padding: 100px 20px;
+  z-index: 1;
+}
+
+/* THE STATIONARY IMAGE (Works on Mobile + Desktop) */
+.ps-hero::before {
+  content: "";
+  position: fixed; /* Pins image to viewport */
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  /* Using your hero image */
+  background-image: url('https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?q=80&w=2087&auto=format&fit=crop');
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  z-index: -1; /* Sits behind everything */
+  will-change: transform; /* Smoothness optimization */
+}
+
+/* Glossy Gradient Overlay */
+.ps-hero-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    to bottom,
+    rgba(0, 0, 0, 0.4) 0%,
+    rgba(0, 0, 0, 0.6) 70%,
+    #000000 100%
+  );
+  backdrop-filter: blur(1px);
+  z-index: 2;
+}
+
+.ps-hero-content {
+  position: relative;
+  z-index: 10;
+}
+.ps-hero-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    to bottom,
+    rgba(0, 0, 0, 0.4) 0%,
+    rgba(0, 0, 0, 0.6) 70%,
+    #000000 100%
+  );
+  backdrop-filter: blur(1px);
+  z-index: 2;
+}
+
+.ps-hero-content {
+  position: relative;
+  z-index: 10;
+}
+.feature-reveal-section {
+  position: relative;
+  z-index: 5; /* Moves this above the fixed background */
+  background: #000; /* Solid black hides the hero image as you scroll */
+  padding: 120px 0;
+}
+
+.reveal {
+  opacity: 0; /* هذا يجعل العنصر غير مرئي تماماً */
+  transform: translateY(40px); /* يدفعه للأسفل قليلًا */
+  transition: all 1s cubic-bezier(0.2, 1, 0.3, 1);
+}
+
+.reveal-active {
+  opacity: 1;
+  transform: translateY(0);
+}
+.tagline-pill {
+    background: rgba(200, 96, 137, 0.15);
+    border: 1px solid rgba(200, 96, 137, 0.3);
+    padding: 8px 24px;
+    border-radius: 100px;
+    display: inline-block;
+    font-size: 0.8rem;
+    font-weight: 700;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: #c86089;
+    margin-bottom: 25px;
+    backdrop-filter: blur(10px);
+}
+.display-text {
+    font-size: clamp(2.5rem, 8vw, 5.5rem);
+    font-weight: 900;
+    line-height: 1;
+    letter-spacing: -3px;
+}
+.display-text-small {
+  font-size: clamp(2.2rem, 5vw, 3.5rem);
+  font-weight: 800;
+  letter-spacing: -2px;
+}
+.text-stroke {
+    -webkit-text-stroke: 1px rgba(255,255,255,0.4);
+    color: transparent;
+}
+.gradient-text {
+    background: linear-gradient(to right, #c86089, #f472b6);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+.hero-sub {
+  max-width: 620px;
+  margin: 30px auto;
+  color: rgba(255,255,255,0.6);
+  font-size: 1.2rem;
+  line-height: 1.6;
+}
+
+.ps-hero-content.reveal {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+
+
+
+
+
+
+
+
+
 .about-v2 {
   position: relative;
   background: #000;

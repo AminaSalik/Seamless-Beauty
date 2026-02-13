@@ -52,7 +52,7 @@ export default function About() {
     }, []);
 
     return (
-        <section className="about-v2">
+        <section className="about-v2 feature-reveal-section">
             <div className="liquid-blur"></div>
 
             <div className="about-v2-container">

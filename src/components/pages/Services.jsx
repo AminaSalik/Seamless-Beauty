@@ -5,7 +5,9 @@ import Footer from "../Footer"
 import ScrollToTopBtn from "./ScrollToTopBtn"
 
 
-const salonImg = "https://images.pexels.com/photos/2533266/pexels-photo-2533266.jpeg?auto=compress&cs=tinysrgb&w=1000";
+const imgs = {
+  heroBg: "https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?q=80&w=2087&auto=format&fit=crop" 
+}
 
 const servicesData = [
   {
@@ -69,110 +71,99 @@ export default function Services() {
 
   return (
 
-<>
-    <Nav />
- <section className="hero">
-        <div className="hero-background">
-          <div className="gradient-bg" />
-          <div className="floating-shapes">
-            {[1, 2, 3, 4, 5, 6].map((i) => (
-              <div key={i} className={`shape shape-${i}`} />
+    <>
+
+    
+     <div className="ps-page">
+
+        <Nav />
+
+      <section className="ps-hero">
+        {/* The background is handled by CSS ::before for the stationary effect */}
+        <div className="ps-hero-overlay"></div>
+
+        <div className="ps-hero-content"> {/* Removed 'reveal' to make it visible immediately */}
+          <div className="tagline-pill">Behind the Glow</div>
+          <h1 className="display-text">
+            Crafting the Future of <span className="text-stroke">Digital</span> <br />
+            Beauty <span className="gradient-text">Experiences</span>
+          </h1>
+          <p className="hero-sub">
+            GlowApp was born from a simple vision: to bridge the gap between world-class beauty
+            and effortless technology. We don't just manage bookings; we curate the first step
+            of your transformation journey.
+          </p>
+        </div>
+      </section>
+
+
+      <section className="services-v3 feature-reveal-section">
+        <div className="services-v3-container">
+
+          {/* Header with Navigation Buttons */}
+          <div className="services-v3-header reveal">
+            <div className="header-left">
+              <span className="tagline-pill">Exclusive Catalog</span>
+              <h2 className="display-text">Curated <span className="gradient-text">Beauty</span></h2>
+            </div>
+            <div className="slider-controls">
+              <button onClick={() => scroll('left')} className="control-btn">←</button>
+              <button onClick={() => scroll('right')} className="control-btn">→</button>
+            </div>
+          </div>
+
+          {/* The Horizontal Slider */}
+          <div className="services-slider" ref={sliderRef}>
+            {servicesData.map((service, index) => (
+              <div key={service.id} className={`service-slide-card reveal delay-${index + 1}`}>
+                <div className="card-img-box">
+                  <img src={service.img} alt={service.title} />
+                  <div className="slide-price">{service.price}</div>
+                </div>
+                <div className="card-body">
+                  <h3>{service.title}</h3>
+                  <p>{service.desc}</p>
+                  <button
+                    className="learn-more-btn"
+                    onClick={() => setSelectedService(service)}
+                  >
+                    Explore Service
+                  </button>
+                </div>
+              </div>
             ))}
           </div>
         </div>
 
-        <div className="hero-content">
-          <div className="hero-text">
-            <h2 className="hero-title">
-              The Art of <span className="pink-accent">Seamless</span> Beauty
-
-            </h2>
-            <p className="hero-description">
-              GlowApp is a simple and elegant appointment booking platform designed to turn visitors into real clients.
-              We believe that your journey to beauty should be as effortless as the result itself.
-            </p>
-
-          </div>
-
-          <div className="hero-visual">
-            <div className="hero-image-wrapper" id="centralOrb">
-              {/* Updated the src here to use salonImg */}
-              <img src={salonImg} alt="Luxury Salon Interior" className="hero-image" />
+        {/* MODERN MODAL */}
+        {selectedService && (
+          <div className="service-modal-overlay" onClick={() => setSelectedService(null)}>
+            <div className="service-modal" onClick={e => e.stopPropagation()}>
+              <button className="close-modal" onClick={() => setSelectedService(null)}>&times;</button>
+              <div className="modal-grid">
+                <div className="modal-img-wrapper">
+                  <img src={selectedService.img} alt={selectedService.title} />
+                </div>
+                <div className="modal-text">
+                  <span className="pink-accent">Premium Experience</span>
+                  <h2>{selectedService.title}</h2>
+                  <div className="modal-price">{selectedService.price}</div>
+                  <p>{selectedService.longDesc}</p>
+                  <button className="book-now-btn">Secure Appointment</button>
+                </div>
+              </div>
             </div>
           </div>
-        </div>
-
-        <div className="scroll-indicator">
-          <div className="scroll-arrow" />
-          <span>Scroll to explore</span>
-        </div>
+        )}
       </section>
 
-   <section className="services-v3">
-      <div className="services-v3-container">
-        
-        {/* Header with Navigation Buttons */}
-        <div className="services-v3-header reveal">
-          <div className="header-left">
-            <span className="tagline-pill">Exclusive Catalog</span>
-            <h2 className="display-text">Curated <span className="gradient-text">Beauty</span></h2>
-          </div>
-          <div className="slider-controls">
-            <button onClick={() => scroll('left')} className="control-btn">←</button>
-            <button onClick={() => scroll('right')} className="control-btn">→</button>
-          </div>
-        </div>
-
-        {/* The Horizontal Slider */}
-        <div className="services-slider" ref={sliderRef}>
-          {servicesData.map((service, index) => (
-            <div key={service.id} className={`service-slide-card reveal delay-${index + 1}`}>
-              <div className="card-img-box">
-                <img src={service.img} alt={service.title} />
-                <div className="slide-price">{service.price}</div>
-              </div>
-              <div className="card-body">
-                <h3>{service.title}</h3>
-                <p>{service.desc}</p>
-                <button 
-                  className="learn-more-btn" 
-                  onClick={() => setSelectedService(service)}
-                >
-                  Explore Service
-                </button>
-              </div>
-            </div>
-          ))}
-        </div>
-      </div>
-
-      {/* MODERN MODAL */}
-      {selectedService && (
-        <div className="service-modal-overlay" onClick={() => setSelectedService(null)}>
-          <div className="service-modal" onClick={e => e.stopPropagation()}>
-            <button className="close-modal" onClick={() => setSelectedService(null)}>&times;</button>
-            <div className="modal-grid">
-              <div className="modal-img-wrapper">
-                <img src={selectedService.img} alt={selectedService.title} />
-              </div>
-              <div className="modal-text">
-                <span className="pink-accent">Premium Experience</span>
-                <h2>{selectedService.title}</h2>
-                <div className="modal-price">{selectedService.price}</div>
-                <p>{selectedService.longDesc}</p>
-                <button className="book-now-btn">Secure Appointment</button>
-              </div>
-            </div>
-          </div>
-        </div>
-      )}
-    </section>
-
- <ScrollToTopBtn />
+      <ScrollToTopBtn />
 
       <Footer />
-</>
+     </div>
+    
+    </>
 
- 
+
   );
 }

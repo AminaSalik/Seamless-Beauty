@@ -1,234 +1,264 @@
 /* ============================================================
-   1. BASE & LAYOUT
+   PROBLEM & SOLUTION: ELITE CONCIERGE EDITION
    ============================================================ */
-.ps-page {
-  background-color: #000;
-  color: #fff;
-  font-family: 'Inter', sans-serif;
-  overflow-x: hidden;
+
+.feature-reveal-section {
+    background: #000;
+    padding: clamp(100px, 15vh, 200px) 0;
+    position: relative;
+    overflow: hidden;
+    color: #fff;
 }
 
 .ps-container {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 0 40px;
+    max-width: 1300px;
+    margin: 0 auto;
+    padding: 0 5%;
 }
 
-/* ============================================================
-   2. MOBILE-FRIENDLY STATIONARY HERO
-   ============================================================ */
-.ps-hero {
-  min-height: 100vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-  position: relative;
-  background: transparent; /* Background is handled by pseudo-element */
-  padding: 100px 20px;
-  z-index: 1;
+/* --- 1. HEADER STYLING --- */
+.section-header {
+    text-align: center;
+    margin-bottom: clamp(80px, 10vh, 150px);
 }
 
-/* THE STATIONARY IMAGE (Works on Mobile + Desktop) */
-.ps-hero::before {
-  content: "";
-  position: fixed; /* Pins image to viewport */
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  /* Using your hero image */
-  background-image: url('https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?q=80&w=2087&auto=format&fit=crop');
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: cover;
-  z-index: -1; /* Sits behind everything */
-  will-change: transform; /* Smoothness optimization */
-}
-
-/* Glossy Gradient Overlay */
-.ps-hero-overlay {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(
-    to bottom,
-    rgba(0, 0, 0, 0.4) 0%,
-    rgba(0, 0, 0, 0.6) 70%,
-    #000000 100%
-  );
-  backdrop-filter: blur(1px);
-  z-index: 2;
-}
-
-.ps-hero-content {
-  position: relative;
-  z-index: 10;
-}
-
-/* ============================================================
-   3. TYPOGRAPHY & TAGS
-   ============================================================ */
-.tagline-pill {
-    background: rgba(200, 96, 137, 0.15);
-    border: 1px solid rgba(200, 96, 137, 0.3);
-    padding: 8px 24px;
-    border-radius: 100px;
-    display: inline-block;
-    font-size: 0.8rem;
-    font-weight: 700;
-    letter-spacing: 3px;
-    text-transform: uppercase;
+.modern-tag {
     color: #c86089;
-    margin-bottom: 25px;
-    backdrop-filter: blur(10px);
-}
-
-.display-text {
-    font-size: clamp(2.5rem, 8vw, 5.5rem);
-    font-weight: 900;
-    line-height: 1;
-    letter-spacing: -3px;
-}
-
-.text-stroke {
-    -webkit-text-stroke: 1px rgba(255,255,255,0.4);
-    color: transparent;
-}
-
-.gradient-text {
-    background: linear-gradient(to right, #c86089, #f472b6);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-}
-
-.hero-sub {
-  max-width: 620px;
-  margin: 30px auto;
-  color: rgba(255,255,255,0.6);
-  font-size: 1.2rem;
-  line-height: 1.6;
-}
-
-/* ============================================================
-   4. SCROLLING OVER SECTION (Black Curtain)
-   ============================================================ */
-.feature-reveal-section {
-  position: relative;
-  z-index: 5; /* Moves this above the fixed background */
-  background: #000; /* Solid black hides the hero image as you scroll */
-  padding: 120px 0;
-}
-
-.section-title {
-  text-align: center;
-  margin-bottom: 120px;
+    letter-spacing: 0.4em;
+    font-size: 0.7rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    margin-bottom: 20px;
+    display: block;
+    opacity: 0.8;
 }
 
 .display-text-small {
-  font-size: clamp(2.2rem, 5vw, 3.5rem);
-  font-weight: 800;
-  letter-spacing: -2px;
+    font-size: clamp(2.5rem, 6vw, 4.5rem);
+    font-weight: 900;
+    letter-spacing: -0.04em;
+    line-height: 1;
 }
 
+/* --- 2. LAYOUT ENGINE --- */
 .feature-row {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 80px;
-  align-items: center;
-  margin-bottom: 180px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 80px;
+    margin-bottom: clamp(120px, 20vh, 250px);
+    position: relative;
 }
 
-.feature-row.reverse .feature-text { order: 2; }
-.feature-row.reverse .feature-image { order: 1; }
+.feature-row.reverse {
+    flex-direction: row-reverse;
+}
+
+.feature-content {
+    flex: 1;
+    position: relative;
+    max-width: 580px;
+    z-index: 2;
+}
+
+/* --- 3. THE "STEP" INDICATOR (DECORATIVE BACKGROUND NUMBERS) --- */
+.step-indicator {
+    font-size: clamp(8rem, 15vw, 12rem);
+    font-weight: 950;
+    line-height: 1;
+    color: transparent;
+    -webkit-text-stroke: 1px rgba(255, 255, 255, 0.05);
+    position: absolute;
+    top: -60px;
+    left: -40px;
+    z-index: -1;
+    user-select: none;
+}
 
 .feature-tag {
-  color: #c86089;
-  text-transform: uppercase;
-  letter-spacing: 4px;
-  font-size: 0.85rem;
-  font-weight: 700;
-  margin-bottom: 20px;
-  display: block;
+    color: #c86089;
+    font-weight: 700;
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    margin-bottom: 15px;
+    display: block;
 }
 
-.feature-text h3 {
-  font-size: clamp(2.2rem, 4vw, 3rem);
-  font-weight: 800;
-  line-height: 1.1;
-  margin-bottom: 20px;
+.modern-h3 {
+    font-size: clamp(2.2rem, 4vw, 3.5rem);
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    line-height: 1.1;
+    margin-bottom: 25px;
+    color: #fff;
 }
 
-.feature-text p {
-  color: #aaa;
-  font-size: 1.1rem;
-  margin-bottom: 40px;
+.modern-p {
+    color: rgba(255, 255, 255, 0.55);
+    font-size: 1.1rem;
+    line-height: 1.8;
+    margin-bottom: 45px;
+    font-weight: 300;
 }
 
-/* ============================================================
-   5. GLASS CARDS & REVEAL
-   ============================================================ */
-.glass-benefit {
-  background: rgba(255, 255, 255, 0.03);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  padding: 25px;
-  border-radius: 24px;
-  display: flex;
-  gap: 20px;
-  backdrop-filter: blur(15px);
-  transition: transform 0.4s ease;
+/* --- 4. LUXURY GLASS CARDS --- */
+.luxury-glass-card {
+    background: linear-gradient(
+        135deg, 
+        rgba(255, 255, 255, 0.06) 0%, 
+        rgba(255, 255, 255, 0.01) 100%
+    );
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 28px;
+    padding: 30px;
+    display: flex;
+    gap: 25px;
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-.glass-benefit:hover {
-    transform: translateX(10px);
+.luxury-glass-card:hover {
+    transform: translateY(-8px) scale(1.01);
     border-color: rgba(200, 96, 137, 0.4);
+    background: rgba(255, 255, 255, 0.08);
+    box-shadow: 0 30px 60px rgba(0, 0, 0, 0.4);
 }
 
-.image-glow-wrap img {
-  width: 100%;
-  height: 500px;
-  object-fit: cover;
-  border-radius: 30px;
-  filter: saturate(1.1);
-  box-shadow: 0 40px 100px rgba(0,0,0,0.8);
+.benefit-icon {
+    font-size: 1.3rem;
+    color: #fff;
+    background: linear-gradient(135deg, #c86089, #f472b6);
+    width: 54px;
+    height: 54px;
+    min-width: 54px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 16px;
+    box-shadow: 0 10px 20px rgba(200, 96, 137, 0.3);
 }
 
-/* Scroll Reveal States */
+.card-info h4 {
+    font-weight: 700;
+    font-size: 1.1rem;
+    margin-bottom: 8px;
+    color: #fff;
+}
+
+.card-info p {
+    font-size: 0.95rem;
+    color: rgba(255, 255, 255, 0.5);
+    line-height: 1.5;
+    margin: 0;
+}
+
+/* --- 5. VISUALS & IMAGES --- */
+.feature-visual {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    position: relative;
+}
+
+.image-frame {
+    position: relative;
+    width: 100%;
+    max-width: 500px;
+    z-index: 1;
+}
+
+.main-img {
+    width: 100%;
+    height: 650px;
+    object-fit: cover;
+    border-radius: 40px;
+    box-shadow: 0 50px 100px rgba(0, 0, 0, 0.6);
+    transition: transform 1s cubic-bezier(0.16, 1, 0.3, 1), filter 1s ease;
+}
+
+.feature-row:hover .main-img {
+    transform: scale(1.02) translateY(-10px);
+}
+
+/* Decorative Blur Elements */
+.floating-blur-ball {
+    position: absolute;
+    width: 400px;
+    height: 400px;
+    background: radial-gradient(circle, rgba(200, 96, 137, 0.2) 0%, transparent 70%);
+    filter: blur(80px);
+    z-index: -1;
+    bottom: -100px;
+    right: -100px;
+    pointer-events: none;
+}
+
+.floating-blur-ball.secondary {
+    background: radial-gradient(circle, rgba(244, 114, 182, 0.15) 0%, transparent 70%);
+    top: -100px;
+    left: -100px;
+}
+
+/* --- 6. SCROLL REVEAL ENGINE --- */
 .reveal {
-  opacity: 0;
-  transform: translateY(40px);
-  transition: all 1s cubic-bezier(0.2, 1, 0.3, 1);
+    opacity: 0;
+    transform: translateY(50px) scale(0.98);
+    transition: opacity 1.2s cubic-bezier(0.16, 1, 0.3, 1), 
+                transform 1.2s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .reveal-active {
-  opacity: 1;
-  transform: translateY(0);
+    opacity: 1;
+    transform: translateY(0) scale(1);
 }
 
-/* ============================================================
-   6. RESPONSIVE DESIGN
-   ============================================================ */
-@media (max-width: 1024px) {
-  .feature-row {
-    grid-template-columns: 1fr;
-    gap: 40px;
-    text-align: center;
-  }
-  
-  .feature-row.reverse .feature-text { order: 1; }
-  .feature-row.reverse .feature-image { order: 2; }
-
-  .glass-benefit {
-    text-align: left;
-    max-width: 500px;
-    margin: 0 auto;
-  }
-}
-
-@media (max-width: 768px) {
-    .image-glow-wrap img {
-        height: 350px;
+/* --- 7. RESPONSIVE OPTIMIZATION --- */
+@media (max-width: 1100px) {
+    .feature-row {
+        gap: 50px;
     }
+    .main-img {
+        height: 500px;
+    }
+}
+
+@media (max-width: 991px) {
+    .feature-row, .feature-row.reverse {
+        flex-direction: column;
+        text-align: center;
+        gap: 80px;
+        margin-bottom: 150px;
+    }
+
+    .feature-content {
+        max-width: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .step-indicator {
+        left: 50%;
+        transform: translateX(-50%);
+        top: -40px;
+    }
+
+    .luxury-glass-card {
+        text-align: left;
+        max-width: 500px;
+    }
+
+    .main-img {
+        height: 450px;
+        max-width: 100%;
+    }
+}
+
+@media (max-width: 480px) {
+    .display-text-small { font-size: 2.2rem; }
+    .modern-h3 { font-size: 1.8rem; }
+    .main-img { height: 350px; }
+    .luxury-glass-card { padding: 20px; }
 }

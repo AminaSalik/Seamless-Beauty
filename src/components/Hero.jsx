@@ -20,11 +20,7 @@ export default function Hero() {
       <Intro />
       <AboutUs/>
       <Services />
-
      <ProblemSolut/>
-
-    
-
       <Benefits_ />
       <Booking />
       <Footer />

@@ -29,6 +29,29 @@ function BookingApp() {
     const [errors, setErrors] = useState({});
     const [adminHolidays, setAdminHolidays] = useState([]);
 
+    // --- NEW: Scroll Reveal Logic ---
+// --- UPDATED Scroll Reveal Logic (No layout change) ---
+useEffect(() => {
+    const observer = new IntersectionObserver(
+        (entries) => {
+            entries.forEach((entry) => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('revealed');
+                }
+            });
+        },
+        { threshold: 0.15 }
+    );
+
+    const section = document.querySelector('.feature-reveal-section');
+    if (section) observer.observe(section);
+
+    return () => {
+        if (section) observer.unobserve(section);
+    };
+}, []);
+
+
     const monthNames = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
 
     useEffect(() => {
@@ -113,7 +136,7 @@ function BookingApp() {
     };
 
     return (
-        <div className="booking-v2-wrapper">
+        <div className="booking-v2-wrapper feature-reveal-section">
             <Nav />
             <div className="booking-v2-hero">
                 <div className="hero-split-content">
@@ -135,7 +158,7 @@ function BookingApp() {
                 <div className="booking-v2-card-area">
                     <div className="glass-concierge-card">
                         {step === 1 && (
-                            <div className="step-fade">
+                            <div className="step-fade" key="step1">
                                 <h3 className="step-title-standalone">Choose a Date</h3>
                                 <div className="calendar-v2">
                                     <div className="cal-header">
@@ -159,7 +182,7 @@ function BookingApp() {
                         )}
 
                         {step === 2 && (
-                            <div className="step-fade">
+                            <div className="step-fade" key="step2">
                                 <div className="step-header">
                                     <button className="icon-back-btn" onClick={() => setStep(1)}><span>←</span></button>
                                     <h3>Choose Time</h3>
@@ -176,7 +199,7 @@ function BookingApp() {
                         )}
 
                         {step === 3 && (
-                            <div className="step-fade">
+                            <div className="step-fade" key="step3">
                                 <div className="step-header">
                                     <button className="icon-back-btn" onClick={() => setStep(2)}><span>←</span></button>
                                     <h3>Guest Details</h3>
@@ -202,9 +225,8 @@ function BookingApp() {
                         )}
 
                         {step === 4 && (
-                            <div className="step-fade">
+                            <div className="step-fade" key="step4">
                                 <div className="step-header">
-                                    {/* Back arrow added here */}
                                     <button className="icon-back-btn" onClick={() => setStep(3)}><span>←</span></button>
                                     <h3>Verification</h3>
                                 </div>
@@ -226,7 +248,7 @@ function BookingApp() {
                     <div className="toast-progress"></div>
                 </div>
             )}
-          
+           
         </div>
     );
 }
