@@ -48,7 +48,7 @@ export default function Benefits() {
   }, []);
 
   return (
-    <section className="benefits-section feature-reveal-section" ref={sectionRef}>
+    <section className="section-padding  benefits-section feature-reveal-section" ref={sectionRef}>
       <div className="benefits-container">
         
         <div className="benefits-header scroll-init">

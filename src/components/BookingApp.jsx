@@ -136,7 +136,7 @@ useEffect(() => {
     };
 
     return (
-        <div className="booking-v2-wrapper feature-reveal-section">
+        <div className="  booking-v2-wrapper feature-reveal-section">
             <Nav />
             <div className="booking-v2-hero">
                 <div className="hero-split-content">

@@ -1,6 +1,4 @@
-/* ============================================================
-   PROBLEM & SOLUTION: ELITE CONCIERGE EDITION
-   ============================================================ */
+
 
 .feature-reveal-section {
     background: #000;
@@ -8,6 +6,7 @@
     position: relative;
     overflow: hidden;
     color: #fff;
+    /* padding: 85px 0; */
 }
 
 .ps-container {
@@ -46,7 +45,7 @@
     align-items: center;
     justify-content: space-between;
     gap: 80px;
-    margin-bottom: clamp(120px, 20vh, 250px);
+    /* margin-bottom: clamp(120px, 20vh, 250px); */
     position: relative;
 }
 
@@ -229,7 +228,6 @@
         flex-direction: column;
         text-align: center;
         gap: 80px;
-        margin-bottom: 150px;
     }
 
     .feature-content {

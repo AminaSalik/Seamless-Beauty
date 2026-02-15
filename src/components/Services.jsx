@@ -99,7 +99,7 @@ export default function Services() {
   ];
 
   return (
-    <section className="services-v3 feature-reveal-section">
+    <section className=" services-v3 feature-reveal-section">
       <div className="services-v3-container">
         
         {/* Header with Navigation Buttons */}

@@ -82,18 +82,18 @@ export default function Services() {
         {/* The background is handled by CSS ::before for the stationary effect */}
         <div className="ps-hero-overlay"></div>
 
-        <div className="ps-hero-content"> {/* Removed 'reveal' to make it visible immediately */}
-          <div className="tagline-pill">Behind the Glow</div>
-          <h1 className="display-text">
-            Crafting the Future of <span className="text-stroke">Digital</span> <br />
-            Beauty <span className="gradient-text">Experiences</span>
-          </h1>
-          <p className="hero-sub">
-            GlowApp was born from a simple vision: to bridge the gap between world-class beauty
-            and effortless technology. We don't just manage bookings; we curate the first step
-            of your transformation journey.
-          </p>
-        </div>
+       <div className="ps-hero-content">
+  <div className="tagline-pill">Behind the Glow</div>
+  <h1 className="display-text">
+    Mastering the Art of <span className="text-stroke">Personal</span> <br />
+    Beauty <span className="gradient-text">Refinement</span>
+  </h1>
+  <p className="hero-sub">
+    Our salon was born from a simple vision: to bring world-class artistry 
+    to your everyday life. We don’t just offer services; we curate a 
+    transformation that begins the moment you step through our doors.
+  </p>
+</div>
       </section>
 
 

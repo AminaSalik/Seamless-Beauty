@@ -11,6 +11,10 @@
     padding: 0 24px;
 }
 
+.section-padding {
+  padding-top: 100px;    /* Space above the section */
+  padding-bottom: 100px; /* Space below the section */
+}
 /* --- SCROLL ANIMATION BASE STATES --- */
 .scroll-init {
     opacity: 0;

@@ -33,14 +33,15 @@ export default function Navbar() {
           <div className="ps-hero-overlay"></div>
 
           <div className="ps-hero-content reveal">
-            <div className="tagline-pill">The Evolution of Booking</div>
+            <div className="tagline-pill">Your Premier Beauty Destination</div>
             <h1 className="display-text">
-              Stop Chasing <span className="text-stroke">Appointments</span>, <br />
-              Start Enjoying the <span className="gradient-text">Glow</span>
+              Forget the <span className="text-stroke">Routine</span>, <br />
+             Embrace Your Signature <span className="gradient-text">Radiance</span>
             </h1>
             <p className="hero-sub">
-              GlowApp removes the friction of traditional booking, providing a
-              space where your transformation is the only priority.
+            Step into a world where your style is our masterpiece. We combine 
+    expert artistry with a tailored experience to ensure you leave 
+    feeling like the best version of yourself
             </p>
           </div>
         </section>

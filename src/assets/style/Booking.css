@@ -1,121 +1,120 @@
 /* --- AUTOFILL FIX: FORCES GLASS LOOK EVEN WHEN AUTOCOMPLETED --- */
 input:-webkit-autofill,
-input:-webkit-autofill:hover, 
-input:-webkit-autofill:focus, 
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
 input:-webkit-autofill:active {
     /* This transition trick hides the white background */
     -webkit-transition: background-color 5000s ease-in-out 0s;
     transition: background-color 5000s ease-in-out 0s;
-    
+
     /* This makes the text stay white */
     -webkit-text-fill-color: #fff !important;
-    
+
     /* This keeps your glass border visible */
     border: 1px solid rgba(255, 255, 255, 0.1) !important;
     caret-color: white;
 }
 
-/* Specific fix for the phone input container if it flashes white */
 .phone-v2-container input:-webkit-autofill {
     -webkit-box-shadow: 0 0 0px 1000px transparent inset !important;
 }
 
-
-
 .ps-page {
-  background-color: #000;
-  color: #fff;
-  font-family: 'Inter', sans-serif;
-  overflow-x: hidden;
+    background-color: #000;
+    color: #fff;
+    font-family: 'Inter', sans-serif;
+    overflow-x: hidden;
 }
 
 .ps-hero {
-  min-height: 100vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-  position: relative;
-  background: transparent; /* Background is handled by pseudo-element */
-  padding: 100px 20px;
-  z-index: 1;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    position: relative;
+    background: transparent;
+    /* Background is handled by pseudo-element */
+    padding: 100px 20px;
+    z-index: 1;
 }
 
-/* THE STATIONARY IMAGE (Works on Mobile + Desktop) */
 .ps-hero::before {
-  content: "";
-  position: fixed; /* Pins image to viewport */
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  /* Using your hero image */
-  background-image: url('https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?q=80&w=2087&auto=format&fit=crop');
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: cover;
-  z-index: -1; /* Sits behind everything */
-  will-change: transform; /* Smoothness optimization */
+    content: "";
+    position: fixed;
+    /* Pins image to viewport */
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    /* Using your hero image */
+    background-image: url('https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?q=80&w=2087&auto=format&fit=crop');
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    z-index: -1;
+    /* Sits behind everything */
+    will-change: transform;
+    /* Smoothness optimization */
 }
 
-/* Glossy Gradient Overlay */
+
 .ps-hero-overlay {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(
-    to bottom,
-    rgba(0, 0, 0, 0.4) 0%,
-    rgba(0, 0, 0, 0.6) 70%,
-    #000000 100%
-  );
-  backdrop-filter: blur(1px);
-  z-index: 2;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(to bottom,
+            rgba(0, 0, 0, 0.4) 0%,
+            rgba(0, 0, 0, 0.6) 70%,
+            #000000 100%);
+    backdrop-filter: blur(1px);
+    z-index: 2;
 }
 
 .ps-hero-content {
-  position: relative;
-  z-index: 10;
+    position: relative;
+    z-index: 10;
 }
+
 .ps-hero-overlay {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(
-    to bottom,
-    rgba(0, 0, 0, 0.4) 0%,
-    rgba(0, 0, 0, 0.6) 70%,
-    #000000 100%
-  );
-  backdrop-filter: blur(1px);
-  z-index: 2;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(to bottom,
+            rgba(0, 0, 0, 0.4) 0%,
+            rgba(0, 0, 0, 0.6) 70%,
+            #000000 100%);
+    backdrop-filter: blur(1px);
+    z-index: 2;
 }
 
 .ps-hero-content {
-  position: relative;
-  z-index: 10;
+    position: relative;
+    z-index: 10;
 }
+
 .feature-reveal-section {
-  position: relative;
-  z-index: 5; /* Moves this above the fixed background */
-  background: #000; /* Solid black hides the hero image as you scroll */
-  padding: 120px 0;
+    position: relative;
+    z-index: 5;
+    background: #000;
+    padding: 120px 0;
 }
 
 .reveal {
-  opacity: 0; /* هذا يجعل العنصر غير مرئي تماماً */
-  transform: translateY(40px); /* يدفعه للأسفل قليلًا */
-  transition: all 1s cubic-bezier(0.2, 1, 0.3, 1);
+    opacity: 0;
+    transform: translateY(40px);
+    transition: all 1s cubic-bezier(0.2, 1, 0.3, 1);
 }
 
 .reveal-active {
-  opacity: 1;
-  transform: translateY(0);
+    opacity: 1;
+    transform: translateY(0);
 }
+
 .tagline-pill {
     background: rgba(200, 96, 137, 0.15);
     border: 1px solid rgba(200, 96, 137, 0.3);
@@ -130,6 +129,7 @@ input:-webkit-autofill:active {
     margin-bottom: 25px;
     backdrop-filter: blur(10px);
 }
+
 .display-text {
     font-size: clamp(2.5rem, 8vw, 5.5rem);
     font-weight: 900;
@@ -137,35 +137,36 @@ input:-webkit-autofill:active {
     letter-spacing: -3px;
     color: white !important;
 }
+
 .display-text-small {
-  font-size: clamp(2.2rem, 5vw, 3.5rem);
-  font-weight: 800;
-  letter-spacing: -2px;
+    font-size: clamp(2.2rem, 5vw, 3.5rem);
+    font-weight: 800;
+    letter-spacing: -2px;
 }
+
 .text-stroke {
-    -webkit-text-stroke: 1px rgba(255,255,255,0.4);
+    -webkit-text-stroke: 1px rgba(255, 255, 255, 0.4);
     color: transparent;
 }
+
 .gradient-text {
     background: linear-gradient(to right, #c86089, #f472b6);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
 }
+
 .hero-sub {
-  max-width: 620px;
-  margin: 30px auto;
-  color: rgba(255,255,255,0.6);
-  font-size: 1.2rem;
-  line-height: 1.6;
+    max-width: 620px;
+    margin: 30px auto;
+    color: rgba(255, 255, 255, 0.6);
+    font-size: 1.2rem;
+    line-height: 1.6;
 }
 
 .ps-hero-content.reveal {
     opacity: 1;
     transform: translateY(0);
 }
-
-
-
 
 .booking-v2-wrapper {
     background: #000;
@@ -186,179 +187,371 @@ input:-webkit-autofill:active {
     align-items: start;
 }
 
-/* ============================================================
-   2. SELECTION PREVIEW & GLASS CARD
-   ============================================================ */
-.selection-preview { display: flex; gap: 10px; margin: 30px 0; }
-.preview-item {
-    background: rgba(255,255,255,0.03);
-    border: 1px solid rgba(255,255,255,0.08);
-    padding: 12px 15px; border-radius: 15px; flex: 1;
+
+.selection-preview {
+    display: flex;
+    gap: 10px;
+    margin: 30px 0;
 }
-.preview-item.active { border-color: #db2777; background: rgba(219,39,119,0.1); }
-.preview-item .label { display: block; font-size: 0.6rem; text-transform: uppercase; color: #777; letter-spacing: 1px; }
-.preview-item .val { font-weight: 700; font-size: 0.9rem; }
+
+.preview-item {
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    padding: 12px 15px;
+    border-radius: 15px;
+    flex: 1;
+}
+
+.preview-item.active {
+    border-color: #db2777;
+    background: rgba(219, 39, 119, 0.1);
+}
+
+.preview-item .label {
+    display: block;
+    font-size: 0.6rem;
+    text-transform: uppercase;
+    color: #777;
+    letter-spacing: 1px;
+}
+
+.preview-item .val {
+    font-weight: 700;
+    font-size: 0.9rem;
+}
 
 .glass-concierge-card {
     background: rgba(255, 255, 255, 0.02);
     backdrop-filter: blur(25px);
     -webkit-backdrop-filter: blur(25px);
     border: 1px solid rgba(255, 255, 255, 0.1);
-    border-radius: 30px; padding: 40px;
-    box-shadow: 0 40px 100px rgba(0,0,0,0.5);
+    border-radius: 30px;
+    padding: 40px;
+    box-shadow: 0 40px 100px rgba(0, 0, 0, 0.5);
 }
 
-/* ============================================================
-   3. NAVIGATION & CALENDAR
-   ============================================================ */
-.step-header { display: flex; align-items: center; gap: 15px; margin-bottom: 30px; }
+
+.step-header {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 30px;
+}
+
 .icon-back-btn {
-    width: 44px; height: 44px; border-radius: 50%;
-    border: 1px solid rgba(255,255,255,0.1); background: rgba(255,255,255,0.05);
-    color: #fff; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: 0.3s;
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    background: rgba(255, 255, 255, 0.05);
+    color: #fff;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: 0.3s;
 }
-.icon-back-btn:hover { background: #db2777; transform: translateX(-3px); }
 
-.cal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
-.cal-header button { background: none; border: 1px solid rgba(255,255,255,0.1); color: #fff; width: 35px; height: 35px; border-radius: 50%; }
-.week-grid { display: grid; grid-template-columns: repeat(7, 1fr); text-align: center; font-size: 0.75rem; color: #555; margin-bottom: 10px; }
-.days-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 6px; }
-.day-cell { aspect-ratio: 1; display: flex; align-items: center; justify-content: center; border-radius: 10px; cursor: pointer; transition: 0.2s; font-size: 0.9rem; }
-.day-cell.available { background: rgba(255,255,255,0.03); }
-.day-cell.available:hover { background: #db2777; }
-.day-cell.selected { background: #db2777 !important; font-weight: 800; }
-.day-cell.unavailable { opacity: 0.1; cursor: not-allowed; }
+.icon-back-btn:hover {
+    background: #db2777;
+    transform: translateX(-3px);
+}
 
-/* ============================================================
-   4. TIME GRID & FORM INPUTS
-   ============================================================ */
-.time-grid-v2 { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; }
+.cal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.cal-header button {
+    background: none;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: #fff;
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+}
+
+.week-grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    text-align: center;
+    font-size: 0.75rem;
+    color: #555;
+    margin-bottom: 10px;
+}
+
+.days-grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 6px;
+}
+
+.day-cell {
+    aspect-ratio: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: 0.2s;
+    font-size: 0.9rem;
+}
+
+.day-cell.available {
+    background: rgba(255, 255, 255, 0.03);
+}
+
+.day-cell.available:hover {
+    background: #db2777;
+}
+
+.day-cell.selected {
+    background: #db2777 !important;
+    font-weight: 800;
+}
+
+.day-cell.unavailable {
+    opacity: 0.1;
+    cursor: not-allowed;
+}
+
+.time-grid-v2 {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+}
+
 .time-pill {
-    padding: 15px; text-align: center; background: rgba(255,255,255,0.03);
-    border: 1px solid rgba(255,255,255,0.08); border-radius: 15px; cursor: pointer;
+    padding: 15px;
+    text-align: center;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 15px;
+    cursor: pointer;
 }
-.time-pill.selected { background: #db2777; border-color: transparent; font-weight: 700; }
 
-.form-v2 { display: flex; flex-direction: column; gap: 12px; }
-.input-row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.time-pill.selected {
+    background: #db2777;
+    border-color: transparent;
+    font-weight: 700;
+}
+
+.form-v2 {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.input-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+}
+
 input {
-    background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.1);
-    padding: 16px; border-radius: 12px; color: #fff; outline: none; width: 100%;
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 16px;
+    border-radius: 12px;
+    color: #fff;
+    outline: none;
+    width: 100%;
 }
-input:focus { border-color: #db2777; }
 
-/* ============================================================
-   5. ULTRA-MODERN PHONE INPUT (NO WHITE BOXES)
-   ============================================================ */
-.phone-v2-container { 
-    width: 100% !important; 
-    height: 55px !important; 
-    background: rgba(255,255,255,0.04) !important; 
-    border: 1px solid rgba(255,255,255,0.1) !important; 
-    border-radius: 12px !important; 
+input:focus {
+    border-color: #db2777;
+}
+
+
+.phone-v2-container {
+    width: 100% !important;
+    height: 55px !important;
+    background: rgba(255, 255, 255, 0.04) !important;
+    border: 1px solid rgba(255, 255, 255, 0.1) !important;
+    border-radius: 12px !important;
     transition: all 0.3s ease;
 }
 
 .phone-v2-container:focus-within {
     border-color: #db2777 !important;
-    background: rgba(255,255,255,0.07) !important;
+    background: rgba(255, 255, 255, 0.07) !important;
 }
 
-.phone-v2-input { 
-    width: 100% !important; 
-    height: 100% !important; 
-    background: transparent !important; 
-    color: white !important; 
-    border: none !important; 
+.phone-v2-input {
+    width: 100% !important;
+    height: 100% !important;
+    background: transparent !important;
+    color: white !important;
+    border: none !important;
 }
 
-.phone-v2-button { 
-    background: transparent !important; 
-    border: none !important; 
-    border-right: 1px solid rgba(255,255,255,0.1) !important; 
+.phone-v2-button {
+    background: transparent !important;
+    border: none !important;
+    border-right: 1px solid rgba(255, 255, 255, 0.1) !important;
 }
 
-.selected-flag { background: transparent !important; border-radius: 12px 0 0 12px !important; }
+.selected-flag {
+    background: transparent !important;
+    border-radius: 12px 0 0 12px !important;
+}
 
-/* The Floating Glass Dropdown */
-.phone-v2-dropdown { 
-    background: rgba(10, 10, 10, 0.98) !important; 
+.phone-v2-dropdown {
+    background: rgba(10, 10, 10, 0.98) !important;
     backdrop-filter: blur(25px) !important;
     -webkit-backdrop-filter: blur(25px) !important;
-    color: #fff !important; 
+    color: #fff !important;
     border: 1px solid rgba(255, 255, 255, 0.1) !important;
     border-radius: 20px !important;
     margin-top: 10px !important;
     padding: 10px !important;
-    box-shadow: 0 25px 60px rgba(0,0,0,0.9) !important;
+    box-shadow: 0 25px 60px rgba(0, 0, 0, 0.9) !important;
     scrollbar-width: thin;
     scrollbar-color: #db2777 transparent;
 }
 
-/* Custom Scrollbar */
-.phone-v2-dropdown::-webkit-scrollbar { width: 4px; }
-.phone-v2-dropdown::-webkit-scrollbar-thumb { background: #db2777; border-radius: 10px; }
 
-/* List Item Modernization */
+.phone-v2-dropdown::-webkit-scrollbar {
+    width: 4px;
+}
+
+.phone-v2-dropdown::-webkit-scrollbar-thumb {
+    background: #db2777;
+    border-radius: 10px;
+}
+
+
 .phone-v2-dropdown .country {
-    border-radius: 12px !important; 
+    border-radius: 12px !important;
     padding: 10px 15px !important;
     margin-bottom: 5px !important;
     transition: 0.2s ease !important;
 }
 
-.phone-v2-dropdown .country:hover { 
-    background: rgba(255, 255, 255, 0.05) !important; 
+.phone-v2-dropdown .country:hover {
+    background: rgba(255, 255, 255, 0.05) !important;
 }
 
-/* Fix for that white highlight from your screenshot */
-.phone-v2-dropdown .country.highlight { 
-    background: #db2777 !important; 
-    color: #fff !important; 
+.phone-v2-dropdown .country.highlight {
+    background: #db2777 !important;
+    color: #fff !important;
 }
 
-/* ============================================================
-   6. BUTTONS & TOAST
-   ============================================================ */
+
 .confirm-main-btn {
-    background: #db2777; border: none; padding: 18px; border-radius: 15px;
-    color: #fff; font-weight: 800; cursor: pointer; margin-top: 10px;
+    background: #db2777;
+    border: none;
+    padding: 18px;
+    border-radius: 15px;
+    color: #fff;
+    font-weight: 800;
+    cursor: pointer;
+    margin-top: 10px;
 }
 
 .toast-modern {
-    position: fixed; bottom: 30px; right: 30px;
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
     background: rgba(15, 15, 15, 0.85);
     backdrop-filter: blur(15px);
     border: 1px solid rgba(255, 255, 255, 0.1);
-    padding: 12px 24px; border-radius: 100px;
-    z-index: 9999; display: flex; flex-direction: column; overflow: hidden;
+    padding: 12px 24px;
+    border-radius: 100px;
+    z-index: 9999;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
     animation: toastSlideIn 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
     min-width: 280px;
 }
 
-.toast-content { display: flex; align-items: center; gap: 12px; }
-.toast-icon {
-    width: 24px; height: 24px; border-radius: 50%;
-    display: flex; align-items: center; justify-content: center;
-    font-size: 0.8rem; font-weight: 900;
+.toast-content {
+    display: flex;
+    align-items: center;
+    gap: 12px;
 }
-.toast-modern.success .toast-icon { background: #10b981; color: white; }
-.toast-modern.err .toast-icon { background: #ef4444; color: white; }
-.toast-progress { position: absolute; bottom: 0; left: 0; height: 3px; width: 100%; animation: toastProgress 4s linear forwards; }
 
-/* ============================================================
-   7. ANIMATIONS & RESPONSIVE
-   ============================================================ */
-@keyframes toastSlideIn { from { transform: translateY(100px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
-@keyframes toastProgress { from { width: 100%; } to { width: 0%; } }
+.toast-icon {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.8rem;
+    font-weight: 900;
+}
+
+.toast-modern.success .toast-icon {
+    background: #10b981;
+    color: white;
+}
+
+.toast-modern.err .toast-icon {
+    background: #ef4444;
+    color: white;
+}
+
+.toast-progress {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    height: 3px;
+    width: 100%;
+    animation: toastProgress 4s linear forwards;
+}
+
+@keyframes toastSlideIn {
+    from {
+        transform: translateY(100px);
+        opacity: 0;
+    }
+
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+@keyframes toastProgress {
+    from {
+        width: 100%;
+    }
+
+    to {
+        width: 0%;
+    }
+}
 
 @media (max-width: 1024px) {
-    .booking-v2-hero { grid-template-columns: 1fr; }
-    .display-text { font-size: 3rem; text-align: center; }
+    .booking-v2-hero {
+        grid-template-columns: 1fr;
+    }
+
+    .display-text {
+        font-size: 3rem;
+        text-align: center;
+    }
 }
 
 @media (max-width: 768px) {
-    .glass-concierge-card { padding: 25px 20px; border-radius: 20px; }
-    .input-row { grid-template-columns: 1fr; }
-    .toast-modern { right: 20px; left: 20px; bottom: 20px; min-width: auto; justify-content: center; }
+    .glass-concierge-card {
+        padding: 25px 20px;
+        border-radius: 20px;
+    }
+
+    .input-row {
+        grid-template-columns: 1fr;
+    }
+
+    .toast-modern {
+        right: 20px;
+        left: 20px;
+        bottom: 20px;
+        min-width: auto;
+        justify-content: center;
+    }
 }

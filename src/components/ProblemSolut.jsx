@@ -19,7 +19,7 @@ export default function ProblemSolut() {
   }, []);
 
   return (
-    <section className="feature-reveal-section">
+    <section className=" feature-reveal-section">
       <div className="ps-container">
         
         <div className="section-header reveal">

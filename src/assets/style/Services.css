@@ -12,29 +12,26 @@
   justify-content: center;
   text-align: center;
   position: relative;
-  background: transparent; /* Background is handled by pseudo-element */
+  background: transparent;
   padding: 100px 20px;
   z-index: 1;
 }
 
-/* THE STATIONARY IMAGE (Works on Mobile + Desktop) */
 .ps-hero::before {
   content: "";
-  position: fixed ; /* Pins image to viewport */
+  position: fixed ;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  /* Using your hero image */
   background-image: url('https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?q=80&w=2087&auto=format&fit=crop');
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
-  z-index: -1; /* Sits behind everything */
-  will-change: transform; /* Smoothness optimization */
+  z-index: -1; 
+  will-change: transform; 
 }
 
-/* Glossy Gradient Overlay */
 .ps-hero-overlay {
   position: absolute;
   top: 0;
@@ -77,14 +74,14 @@
 }
 .feature-reveal-section {
   position: relative;
-  z-index: 5; /* Moves this above the fixed background */
-  background: #000; /* Solid black hides the hero image as you scroll */
-  padding: 120px 0;
+  z-index: 5; 
+  background: #000; 
+  /* padding: 120px 0; */
 }
 
 .reveal {
-  opacity: 0; /* هذا يجعل العنصر غير مرئي تماماً */
-  transform: translateY(40px); /* يدفعه للأسفل قليلًا */
+  opacity: 0; 
+  transform: translateY(40px); 
   transition: all 1s cubic-bezier(0.2, 1, 0.3, 1);
 }
 
@@ -133,17 +130,6 @@
     opacity: 1;
     transform: translateY(0);
 }
-
-
-
-
-
-
-
-
-
-
-
 
 .services-v3-container {
   max-width: 1300px;
