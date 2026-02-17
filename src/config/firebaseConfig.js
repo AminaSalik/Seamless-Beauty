@@ -1,4 +1,5 @@
-import { initializeApp } from "firebase/app";
+// 1. تأكد من وجود هذا السطر في أعلى الملف
+import { initializeApp } from "firebase/app"; 
 import { getFirestore } from "firebase/firestore";
 import { getAuth } from "firebase/auth"; 
 
@@ -12,6 +13,8 @@ const firebaseConfig = {
   measurementId: import.meta.env.VITE_FIREBASE_MEASUREMENT_ID
 };
 
+// 2. تأكد من كتابة الاسم صحيحاً هنا (حرف i صغير في البداية)
 const app = initializeApp(firebaseConfig);
+
 export const db = getFirestore(app);
 export const auth = getAuth(app);

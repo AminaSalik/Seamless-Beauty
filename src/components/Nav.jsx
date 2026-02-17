@@ -1,51 +1,54 @@
-import React, { useState } from "react";
-// import "../assets/style/Nav.css";
-import { Link } from 'react-router-dom';
+import React, { useState, useEffect } from "react";
+import { NavLink, Link } from 'react-router-dom';
 
 export default function Nav() {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
+    const [scrolled, setScrolled] = useState(false);
+
+    useEffect(() => {
+        const handleScroll = () => setScrolled(window.scrollY > 20);
+        window.addEventListener("scroll", handleScroll);
+        return () => window.removeEventListener("scroll", handleScroll);
+    }, []);
+
+    const closeMenu = () => setIsMenuOpen(false);
 
     return (
-        <nav className="navbar">
+        <nav className={`nav-magic-wrapper ${scrolled ? "nav-island" : ""}`}>
             <div className="nav-container">
-                <div className="nav-logo">GLOW<span className="span__">APP</span></div>
+                
+                {/* Logo Area */}
+                <Link to="/" className="nav-logo" onClick={closeMenu}>
+                    G L O W<span className="dot">.</span>
+                </Link>
 
-                <div className={`nav-links ${isMenuOpen ? "active" : ""}`}>
-                    <Link to="/" className="nav-item text-white" onClick={() => setIsMenuOpen(false)}>
-                        Home
-                    </Link>
+                {/* Right Side Group: Links + Button */}
+                <div className={`nav-menu-wrapper ${isMenuOpen ? "active" : ""}`}>
+                    <ul className="nav-links">
+                        <li><NavLink to="/" onClick={closeMenu}>Home</NavLink></li>
+                        <li><NavLink to="/services" onClick={closeMenu}>Services</NavLink></li>
+                        <li><NavLink to="/solutions" onClick={closeMenu}>Solutions</NavLink></li>
+                        <li><NavLink to="/about" onClick={closeMenu}>Story</NavLink></li>
+                        <li><NavLink to="/admin" className="nav-login-link" onClick={closeMenu}>Login</NavLink></li>
+                    </ul>
 
-                    <Link to="/about" className="nav-item text-white" onClick={() => setIsMenuOpen(false)}>
-                        About
-                    </Link>
-
-                    <Link to="/solutions" className="nav-item text-white" onClick={() => setIsMenuOpen(false)}>
-                        Solutions
-                    </Link>
-
-                    <Link to="/services" className="nav-item text-white" onClick={() => setIsMenuOpen(false)}>
-                        Services
-                    </Link>
-
-                    <Link to="/admin" className="admin-link" onClick={() => setIsMenuOpen(false)}>
-                        Login
-                    </Link>
-
-                    {/* This Link will now take you to the BookingNow page and close the mobile menu */}
-                    <Link 
-                        to="/bookingNow" 
-                        className="btn nav-btn btn-primary" 
-                        onClick={() => setIsMenuOpen(false)}
-                    >
-                        Booking Now
+                    {/* Booking Button */}
+                    <Link to="/bookingNow" className="magic-btn" onClick={closeMenu}>
+                        <span>Book Now</span>
+                        <div className="btn-glow"></div>
                     </Link>
                 </div>
 
-                <div className="mobile-menu-icon" onClick={() => setIsMenuOpen(!isMenuOpen)}>
-                    <div className={`line ${isMenuOpen ? "open" : ""}`}></div>
-                    <div className={`line ${isMenuOpen ? "open" : ""}`}></div>
-                    <div className={`line ${isMenuOpen ? "open" : ""}`}></div>
-                </div>
+                {/* Mobile Icon */}
+                <button 
+                    className={`magic-menu-toggle ${isMenuOpen ? "active" : ""}`} 
+                    onClick={() => setIsMenuOpen(!isMenuOpen)}
+                >
+                    <div className="icon-box">
+                        <span className="l1"></span>
+                        <span className="l2"></span>
+                    </div>
+                </button>
             </div>
         </nav>
     );

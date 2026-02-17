@@ -1,5 +1,5 @@
 import React from 'react';
-import { FaInstagram, FaFacebook, FaTwitter, FaArrowUp } from 'react-icons/fa';
+import { FaInstagram, FaFacebook, FaTwitter } from 'react-icons/fa';
 import "../assets/style/Footer.css";
 
 export default function Footer() {
@@ -59,9 +59,7 @@ export default function Footer() {
 
         <div className="footer-bottom">
           <p>&copy; {new Date().getFullYear()} GlowApp Studio. All rights reserved.</p>
-          <button className="back-to-top" onClick={scrollToTop}>
-            <FaArrowUp />
-          </button>
+          
         </div>
       </div>
     </footer>

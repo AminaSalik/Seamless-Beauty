@@ -6,7 +6,6 @@ import emailjs from '@emailjs/browser';
 import PhoneInput from 'react-phone-input-2';
 import 'react-phone-input-2/lib/style.css';
 import Nav from "./Nav";
-import Footer from "./Footer";
 
 function BookingApp() {
     const today = new Date();
@@ -29,28 +28,26 @@ function BookingApp() {
     const [errors, setErrors] = useState({});
     const [adminHolidays, setAdminHolidays] = useState([]);
 
-    // --- NEW: Scroll Reveal Logic ---
-// --- UPDATED Scroll Reveal Logic (No layout change) ---
-useEffect(() => {
-    const observer = new IntersectionObserver(
-        (entries) => {
-            entries.forEach((entry) => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('revealed');
-                }
-            });
-        },
-        { threshold: 0.15 }
-    );
+    // Logic for Intersection Observer
+    useEffect(() => {
+        const observer = new IntersectionObserver(
+            (entries) => {
+                entries.forEach((entry) => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('revealed');
+                    }
+                });
+            },
+            { threshold: 0.15 }
+        );
 
-    const section = document.querySelector('.feature-reveal-section');
-    if (section) observer.observe(section);
+        const section = document.querySelector('.feature-reveal-section');
+        if (section) observer.observe(section);
 
-    return () => {
-        if (section) observer.unobserve(section);
-    };
-}, []);
-
+        return () => {
+            if (section) observer.unobserve(section);
+        };
+    }, []);
 
     const monthNames = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
 
@@ -136,7 +133,7 @@ useEffect(() => {
     };
 
     return (
-        <div className="  booking-v2-wrapper feature-reveal-section">
+        <div className="booking-v2-wrapper feature-reveal-section">
             <Nav />
             <div className="booking-v2-hero">
                 <div className="hero-split-content">
@@ -158,7 +155,7 @@ useEffect(() => {
                 <div className="booking-v2-card-area">
                     <div className="glass-concierge-card">
                         {step === 1 && (
-                            <div className="step-fade" key="step1">
+                            <div className="step-fade">
                                 <h3 className="step-title-standalone">Choose a Date</h3>
                                 <div className="calendar-v2">
                                     <div className="cal-header">
@@ -167,11 +164,14 @@ useEffect(() => {
                                         <button onClick={() => setCurrentMonth(prev => prev === 11 ? 0 : prev + 1)}>→</button>
                                     </div>
                                     <div className="week-grid">
-                                        {['S','M','T','W','T','F','S'].map(d=><div key={d}>{d}</div>)}
+                                        {/* FIXED: Added index to key to prevent "S" and "T" duplicates */}
+                                        {['S','M','T','W','T','F','S'].map((day, index) => (
+                                            <div key={`${day}-${index}`}>{day}</div>
+                                        ))}
                                     </div>
                                     <div className="days-grid">
                                         {generateCalendarDays().map((d, i) => (
-                                            <div key={i} className={`day-cell ${d.status} ${selectedDate === d.date ? 'selected' : ''}`}
+                                            <div key={d.date || `empty-${i}`} className={`day-cell ${d.status} ${selectedDate === d.date ? 'selected' : ''}`}
                                                 onClick={() => { if(d.status==='available'){ setSelectedDate(d.date); setStep(2); }}}>
                                                 {d.day}
                                             </div>
@@ -182,7 +182,7 @@ useEffect(() => {
                         )}
 
                         {step === 2 && (
-                            <div className="step-fade" key="step2">
+                            <div className="step-fade">
                                 <div className="step-header">
                                     <button className="icon-back-btn" onClick={() => setStep(1)}><span>←</span></button>
                                     <h3>Choose Time</h3>
@@ -199,7 +199,7 @@ useEffect(() => {
                         )}
 
                         {step === 3 && (
-                            <div className="step-fade" key="step3">
+                            <div className="step-fade">
                                 <div className="step-header">
                                     <button className="icon-back-btn" onClick={() => setStep(2)}><span>←</span></button>
                                     <h3>Guest Details</h3>
@@ -225,7 +225,7 @@ useEffect(() => {
                         )}
 
                         {step === 4 && (
-                            <div className="step-fade" key="step4">
+                            <div className="step-fade">
                                 <div className="step-header">
                                     <button className="icon-back-btn" onClick={() => setStep(3)}><span>←</span></button>
                                     <h3>Verification</h3>
@@ -248,7 +248,6 @@ useEffect(() => {
                     <div className="toast-progress"></div>
                 </div>
             )}
-           
         </div>
     );
 }

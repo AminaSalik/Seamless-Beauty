@@ -23,7 +23,7 @@ export default function Navbar() {
   return (
     <>
 
-      <div className="ps-page">
+      <div className="ps-page ">
 
         <Nav />
         <section
