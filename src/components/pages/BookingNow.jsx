@@ -11,16 +11,7 @@ export default function BookingNow() {
  const imgs = {
     heroBg: "https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?q=80&w=2087&auto=format&fit=crop" 
   }
-  useEffect(() => {
-    if (window.AOS) {
-      window.AOS.init({
-        duration: 1000,
-        once: true,
-        offset: 100,
-      });
-      window.AOS.refresh();
-    }
-  }, []);
+
 
   const salonImg = "https://images.pexels.com/photos/2533266/pexels-photo-2533266.jpeg?auto=compress&cs=tinysrgb&w=1000";
 
