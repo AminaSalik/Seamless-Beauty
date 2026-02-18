@@ -17,32 +17,30 @@ export default function Nav() {
         <nav className={`nav-magic-wrapper ${scrolled ? "nav-island" : ""}`}>
             <div className="nav-container">
                 
-                {/* Logo Area */}
                 <Link to="/" className="nav-logo" onClick={closeMenu}>
                     G L O W<span className="dot">.</span>
                 </Link>
 
-                {/* Right Side Group: Links + Button */}
                 <div className={`nav-menu-wrapper ${isMenuOpen ? "active" : ""}`}>
                     <ul className="nav-links">
                         <li><NavLink to="/" onClick={closeMenu}>Home</NavLink></li>
+                              <li><NavLink to="/about" onClick={closeMenu}>Story</NavLink></li>
                         <li><NavLink to="/services" onClick={closeMenu}>Services</NavLink></li>
                         <li><NavLink to="/solutions" onClick={closeMenu}>Solutions</NavLink></li>
-                        <li><NavLink to="/about" onClick={closeMenu}>Story</NavLink></li>
+                  
                         <li><NavLink to="/admin" className="nav-login-link" onClick={closeMenu}>Login</NavLink></li>
                     </ul>
 
-                    {/* Booking Button */}
                     <Link to="/bookingNow" className="magic-btn" onClick={closeMenu}>
                         <span>Book Now</span>
                         <div className="btn-glow"></div>
                     </Link>
                 </div>
 
-                {/* Mobile Icon */}
                 <button 
                     className={`magic-menu-toggle ${isMenuOpen ? "active" : ""}`} 
                     onClick={() => setIsMenuOpen(!isMenuOpen)}
+                    aria-label="Toggle Menu"
                 >
                     <div className="icon-box">
                         <span className="l1"></span>

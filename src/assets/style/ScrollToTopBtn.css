@@ -1,42 +1,70 @@
 .scroll-top-btn {
     position: fixed;
-    bottom: 30px;
-    right: 30px;
+    bottom: 40px;
+    right: 40px;
     width: 50px;
     height: 50px;
-    background-color: #3b2323;
-    /* Matching your theme */
-    color: #ffffff;
-    /* Gold/Accent color */
-    border-radius: 50%;
+    
+    /* 2026 Raw Minimalist Style */
+    background: #000;
+    color: #fff;
+    border: none;
     display: flex;
     align-items: center;
     justify-content: center;
-    text-decoration: none;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
     z-index: 1000;
+    
+    /* The "Portal" Initial State */
     opacity: 0;
     visibility: hidden;
-    transition: all 0.4s ease;
-    border: 1px solid rgba(0, 0, 0, 0.3);
+    /* Starts as a thin vertical line */
+    transform: scaleX(0.05) scaleY(0.1); 
+    filter: blur(10px);
+    
+    /* Liquid Physics Transition */
+    transition: 
+        opacity 0.5s ease,
+        transform 0.7s cubic-bezier(0.8, 0, 0.2, 1),
+        filter 0.6s ease,
+        visibility 0.7s;
 }
 
+/* Active State: The Portal Opens */
 .scroll-top-btn.visible {
     opacity: 1;
     visibility: visible;
+    transform: scaleX(1) scaleY(1);
+    filter: blur(0px);
 }
 
+/* Hover: The "Inversion" Magic */
 .scroll-top-btn:hover {
-    transform: translateY(-5px);
-    background-color: #ffffff;
-    color: #3b2323;
+    background: #fff; /* Inverts color */
+    color: #000;
+    transform: translateY(-10px);
+    /* Creates a sharp, hard-edged shadow on hover */
+    box-shadow: 10px 10px 0px var(--accent-color, #c86089); 
+}
+
+/* Icon Animation */
+.scroll-top-btn svg {
+    transition: transform 0.3s ease;
+}
+
+.scroll-top-btn:hover svg {
+    animation: arrowBounce 0.6s infinite alternate;
+}
+
+@keyframes arrowBounce {
+    from { transform: translateY(2px); }
+    to { transform: translateY(-4px); }
 }
 
 /* Mobile Adjustments */
 @media (max-width: 768px) {
     .scroll-top-btn {
-        bottom: 20px;
-        right: 20px;
+        bottom: 30px;
+        right: 30px;
         width: 45px;
         height: 45px;
     }

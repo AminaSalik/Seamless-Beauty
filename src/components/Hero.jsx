@@ -8,7 +8,7 @@ import AboutUs from "./AboutUs"
 import Footer from "./Footer"
 import Booking from "./BookingApp"
 import { OrbController } from "../utils/animations"
-
+import ScrollToTopBtn from "./pages/ScrollToTopBtn"
 export default function Hero() {
   useEffect(() => {
     new OrbController();
@@ -24,6 +24,7 @@ export default function Hero() {
       <Benefits_ />
       <Booking />
       <Footer />
+      <ScrollToTopBtn />
     </>
   )
 }
