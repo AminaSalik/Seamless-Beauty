@@ -33,7 +33,7 @@ export default function Navbar() {
           <div className="ps-hero-overlay"></div>
 
           <div className="ps-hero-content reveal">
-            <div className="tagline-pill">Your Premier Beauty Destination</div>
+            <div className="tagline-pill">Your Go-To Glow</div>
             <h1 className="display-text">
               Forget the <span className="text-stroke">Routine</span>, <br />
              Embrace Your Signature <span className="gradient-text">Radiance</span>
