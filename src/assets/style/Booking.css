@@ -1,3 +1,31 @@
+/* 1. Target the autofill state specifically */
+input:-webkit-autofill,
+input:-webkit-autofill:hover, 
+input:-webkit-autofill:focus, 
+input:-webkit-autofill:active {
+    /* This transitions the background color to transparent over a very long time */
+    transition: background-color 5000s ease-in-out 0s;
+    
+    /* This overrides the default blue/yellow background with a dark tint */
+    -webkit-box-shadow: 0 0 0px 1000px rgba(255, 255, 255, 0.04) inset !important;
+    
+    /* This ensures the text inside stays white */
+    -webkit-text-fill-color: #fff !important;
+}
+
+/* 2. Update your base input to ensure glass transparency */
+input {
+    background: rgba(255, 255, 255, 0.05) !important;
+    backdrop-filter: blur(10px); /* Optional: adds the 'frosted' glass feel */
+    border: 1px solid rgba(255, 255, 255, 0.1) !important;
+    padding: 16px;
+    border-radius: 12px;
+    color: #fff;
+    outline: none;
+    width: 100%;
+}
+
+
 
 
 .phone-v2-container input:-webkit-autofill {
@@ -327,15 +355,6 @@
     gap: 10px;
 }
 
-input {
-    background: rgba(255, 255, 255, 0.04);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    padding: 16px;
-    border-radius: 12px;
-    color: #fff;
-    outline: none;
-    width: 100%;
-}
 
 input:focus {
     border-color: #db2777;

@@ -35,7 +35,7 @@ export default function Navbar() {
           <div className="ps-hero-content reveal">
             <div className="tagline-pill">Your Go-To Glow</div>
             <h1 className="display-text">
-              Forget the <span className="text-stroke">Routine</span>, <br />
+              Forget the <span className="text-stroke">Routine</span> <br />
              Embrace Your Signature <span className="gradient-text">Radiance</span>
             </h1>
             <p className="hero-sub">
