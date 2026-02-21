@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { db } from '../config/firebaseConfig';
-import { collection, onSnapshot, doc, deleteDoc, setDoc, updateDoc } from "firebase/firestore";
-import { Users, Trash2, XCircle, Clock, Search, CheckCircle, X, Calendar } from 'lucide-react';
+import { collection, onSnapshot, doc, deleteDoc, updateDoc, setDoc } from "firebase/firestore";
+import { Users, Trash2, Clock, Search, CheckCircle, X, Calendar, CheckSquare } from 'lucide-react';
 import "../assets/style/Admin.css";
 
 export default function AdminDashboard() {
@@ -14,7 +14,6 @@ export default function AdminDashboard() {
   useEffect(() => {
     const unsubscribe = onSnapshot(collection(db, "bookings"), (snap) => {
       const data = snap.docs.map(doc => ({ id: doc.id, ...doc.data() }));
-      // Sort by newest date first
       setBookings(data.sort((a, b) => new Date(b.date) - new Date(a.date)));
     }, (error) => console.error("Firestore Error:", error));
     return () => unsubscribe();
@@ -27,31 +26,39 @@ export default function AdminDashboard() {
     return () => unsubscribe();
   }, []);
 
-  // --- Logic Functions ---
-  const updateStatus = async (id, status) => {
-    await updateDoc(doc(db, "bookings", id), { status });
+
+  const updateStatus = async (e, id, newStatus) => {
+    if (e) e.preventDefault();
+
+    try {
+      const docRef = doc(db, "bookings", id);
+      await updateDoc(docRef, {
+        status: newStatus
+      });
+      console.log(`Status updated to ${newStatus}`);
+    } catch (error) {
+      console.error("Error updating status:", error);
+      alert("Failed to update status. Check console.");
+    }
   };
 
-  const deleteBooking = async (id) => {
-    if (window.confirm("Are you sure you want to permanently delete this record?")) {
+  const deleteBooking = async (e, id) => {
+    if (e) e.preventDefault();
+    if (window.confirm("Are you sure?")) {
       await deleteDoc(doc(db, "bookings", id));
     }
   };
 
-  const addHoliday = async () => {
-    if (!newHoliday) return;
-    await setDoc(doc(db, "holidays", newHoliday), { active: true });
-    setNewHoliday("");
-  };
-
-  // --- Grouping & Filtering ---
   const filteredBookings = bookings.filter(b => {
-    const matchesSearch = `${b.firstName} ${b.lastName}`.toLowerCase().includes(searchTerm.toLowerCase()) || b.number.includes(searchTerm);
-    const matchesFilter = filterStatus === "all" || b.status === filterStatus;
-    return matchesSearch && matchesFilter;
+    const name = `${b.firstName || ''} ${b.lastName || ''}`.toLowerCase();
+    const matchesSearch = name.includes(searchTerm.toLowerCase()) || (b.number && b.number.includes(searchTerm));
+
+    const bStatus = (b.status || "verified").toLowerCase();
+    const fStatus = filterStatus.toLowerCase();
+
+    return matchesSearch && (filterStatus === "all" || bStatus === fStatus);
   });
 
-  // Group bookings by Month for the UI
   const groupedBookings = filteredBookings.reduce((acc, booking) => {
     const month = new Date(booking.date).toLocaleString('default', { month: 'long', year: 'numeric' });
     if (!acc[month]) acc[month] = [];
@@ -76,87 +83,81 @@ export default function AdminDashboard() {
           <h1>Management Console</h1>
           <div className="search-bar">
             <Search size={18} />
-            <input 
-              type="text" 
-              placeholder="Search name or phone..." 
+            <input
+              type="text"
+              placeholder="Search..."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
             />
           </div>
         </header>
 
-        <div className="stats-grid">
-          <div className="stat-card">
-            <span className="stat-label">Total Bookings</span>
-            <div className="stat-value">{bookings.length}</div>
-          </div>
-          <div className="stat-card">
-            <span className="stat-label">Pending Review</span>
-            <div className="stat-value text-yellow">{bookings.filter(b => b.status === 'verified').length}</div>
-          </div>
-        </div>
-
         <div className="admin-split-view">
           <section className="admin-section">
-            {Object.keys(groupedBookings).length === 0 ? (
-              <div className="no-data">No bookings found for this criteria.</div>
-            ) : (
-              Object.keys(groupedBookings).map(month => (
-                <div key={month} className="month-group">
-                  <h2 className="month-title">{month}</h2>
-                  <div className="table-wrapper">
-                    <table>
-                      <thead>
-                        <tr>
-                          <th>Client</th>
-                          <th>Service</th>
-                          <th>Date/Time</th>
-                          <th>Status</th>
-                          <th>Actions</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        {groupedBookings[month].map((item) => (
-                          <tr key={item.id} className={`status-${item.status}`}>
-                            <td><strong>{item.firstName} {item.lastName}</strong><br/><small>{item.number}</small></td>
-                            <td><span className="service-tag">{item.service || "General Service"}</span></td>
-                            <td>{item.date} <br/> <small><Clock size={10}/> {item.time}</small></td>
-                            <td><span className={`badge ${item.status}`}>{item.status || 'pending'}</span></td>
+            {Object.keys(groupedBookings).map(month => (
+              <div key={month} className="month-group">
+                <h2 className="month-title">{month}</h2>
+                <div className="table-wrapper">
+                  <table>
+                    <thead>
+                      <tr>
+                        <th>Client</th>
+                        <th>Service</th>
+                        <th>Date/Time</th>
+                        <th>Status</th>
+                        <th>Actions</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {groupedBookings[month].map((item) => {
+                        const currentStatus = (item.status || "verified").toLowerCase();
+                        return (
+                          <tr key={item.id}>
+                            <td><strong>{item.firstName} {item.lastName}</strong><br /><small>{item.number}</small></td>
+                            <td><span className="service-tag">{item.service}</span></td>
+                            <td>{item.date} <br /> {item.time}</td>
+                            <td><span className={`badge ${currentStatus}`}>{item.status}</span></td>
                             <td>
                               <div className="action-group">
-                                {item.status !== 'confirmed' && (
-                                  <button className="confirm-btn" title="Confirm" onClick={() => updateStatus(item.id, 'confirmed')}><CheckCircle size={18}/></button>
+
+                                {currentStatus === 'verified' && (
+                                  <button
+                                    type="button"
+                                    className="confirm-btn"
+                                    onClick={(e) => updateStatus(e, item.id, 'confirmed')}
+                                  >
+                                    <CheckCircle size={18} />
+                                  </button>
                                 )}
-                                {item.status !== 'completed' && (
-                                  <button className="complete-btn" title="Mark Done" onClick={() => updateStatus(item.id, 'completed')}><Calendar size={18}/></button>
+
+                                {/* زر Done: يظهر فقط في Confirmed */}
+                                {currentStatus === 'confirmed' && (
+                                  <button
+                                    type="button"
+                                    className="complete-btn"
+                                    onClick={(e) => updateStatus(e, item.id, 'completed')}
+                                  >
+                                    <CheckSquare size={18} />
+                                  </button>
                                 )}
-                                <button className="delete-btn" title="Delete" onClick={() => deleteBooking(item.id)}><Trash2 size={18}/></button>
+
+                                <button
+                                  type="button"
+                                  className="delete-btn"
+                                  onClick={(e) => deleteBooking(e, item.id)}
+                                >
+                                  <Trash2 size={18} />
+                                </button>
                               </div>
                             </td>
                           </tr>
-                        ))}
-                      </tbody>
-                    </table>
-                  </div>
+                        );
+                      })}
+                    </tbody>
+                  </table>
                 </div>
-              ))
-            )}
-          </section>
-
-          <section className="holiday-mgmt">
-            <h3>Block Dates (Holidays)</h3>
-            <div className="holiday-input">
-              <input type="date" value={newHoliday} onChange={(e) => setNewHoliday(e.target.value)} />
-              <button onClick={addHoliday}>Block</button>
-            </div>
-            <div className="holiday-list">
-              {holidays.sort().map(date => (
-                <div key={date} className="holiday-item">
-                  <span>{date}</span>
-                  <X size={18} className="remove-holiday" onClick={() => deleteDoc(doc(db, "holidays", date))} />
-                </div>
-              ))}
-            </div>
+              </div>
+            ))}
           </section>
         </div>
       </main>
