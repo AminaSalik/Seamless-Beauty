@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { Link } from 'react-router-dom';
 import "../assets/style/Navbar.css";
 import Nav from "./Nav";
 
@@ -43,6 +44,11 @@ export default function Navbar() {
     expert artistry with a tailored experience to ensure you leave 
     feeling like the best version of yourself
             </p>
+
+            <Link to="/bookingNow" className="magic-btn-hero" >
+                        <span>Book Now</span>
+                        <div className="btn-glow"></div>
+                    </Link>
           </div>
         </section>
 

@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom'; 
 import '../assets/style/Booking.css';
 import { db } from '../config/firebaseConfig';
 import { collection, addDoc, serverTimestamp, onSnapshot, query } from "firebase/firestore";
@@ -8,6 +9,10 @@ import 'react-phone-input-2/lib/style.css';
 import Nav from "./Nav";
 
 function BookingApp() {
+    const location = useLocation();
+    const navigate = useNavigate();
+    const selectedService = location.state?.serviceTitle || "General Beauty Service";
+
     const today = new Date();
     today.setHours(0, 0, 0, 0);
 
@@ -27,27 +32,7 @@ function BookingApp() {
     const [toastMessage, setToastMessage] = useState({ text: "", isError: false });
     const [errors, setErrors] = useState({});
     const [adminHolidays, setAdminHolidays] = useState([]);
-
-    // Logic for Intersection Observer
-    useEffect(() => {
-        const observer = new IntersectionObserver(
-            (entries) => {
-                entries.forEach((entry) => {
-                    if (entry.isIntersecting) {
-                        entry.target.classList.add('revealed');
-                    }
-                });
-            },
-            { threshold: 0.15 }
-        );
-
-        const section = document.querySelector('.feature-reveal-section');
-        if (section) observer.observe(section);
-
-        return () => {
-            if (section) observer.unobserve(section);
-        };
-    }, []);
+    const [showExitModal, setShowExitModal] = useState(false);
 
     const monthNames = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
 
@@ -72,6 +57,15 @@ function BookingApp() {
         return `${hour % 12 || 12}:${min.toString().padStart(2, '0')} ${ampm}`;
     };
 
+    const handleNextAvailability = () => {
+        if (currentMonth === 11) {
+            setCurrentMonth(0);
+            setCurrentYear(prev => prev + 1);
+        } else {
+            setCurrentMonth(prev => prev + 1);
+        }
+    };
+
     const handleSendCode = async () => {
         let tempErrors = {};
         if (!firstName) tempErrors.firstName = true;
@@ -92,7 +86,8 @@ function BookingApp() {
         try {
             await emailjs.send('service_8x55t1g', 'template_ns3ljzk', {
                 to_name: firstName, to_email: email.trim().toLowerCase(),
-                otp_code: otp, from_name: "GLOW"
+                otp_code: otp, from_name: "GLOW", 
+                service_booked: selectedService 
             }, 'aeA09BV8gXTdUDj0I');
             setStep(4);
             triggerToast("Verification code sent!", false);
@@ -111,6 +106,7 @@ function BookingApp() {
             await addDoc(collection(db, "bookings"), {
                 firstName, lastName, email, number: "+" + number,
                 date: selectedDate, time: selectedTime,
+                service: selectedService,
                 status: "verified", createdAt: serverTimestamp()
             });
             triggerToast("Booking Confirmed! ✅", false);
@@ -127,7 +123,11 @@ function BookingApp() {
         for (let d = 1; d <= daysInMonth; d++) {
             const dateStr = `${currentYear}-${(currentMonth+1).toString().padStart(2,'0')}-${d.toString().padStart(2,'0')}`;
             const dateObj = new Date(currentYear, currentMonth, d);
-            days.push({ day: d, date: dateStr, status: (dateObj < today || adminHolidays.includes(dateStr)) ? 'unavailable' : 'available' });
+            days.push({ 
+                day: d, 
+                date: dateStr, 
+                status: (dateObj < today || adminHolidays.includes(dateStr)) ? 'unavailable' : 'available' 
+            });
         }
         return days;
     };
@@ -137,7 +137,13 @@ function BookingApp() {
             <Nav />
             <div className="booking-v2-hero">
                 <div className="hero-split-content">
-                    <span className="tagline-pill">Private Concierge</span>
+                    {/* بطاقة الخدمة مع زر تعديل */}
+                    <div className="active-service-box" style={{ border: '1.5px solid #c86089', background: 'rgba(200, 96, 137, 0.05)', padding: '20px', borderRadius: '24px', marginBottom: '35px', maxWidth: '320px', position: 'relative' }}>
+                        <span className="label" style={{color: '#888', fontSize: '0.7rem', letterSpacing: '2px', textTransform: 'uppercase'}}>Service</span>
+                        <h2 style={{color: '#fff', fontSize: '1.5rem', margin: '8px 0'}}>{selectedService}</h2>
+                        <button onClick={() => navigate('/services')} style={{background: 'none', border: 'none', color: '#c86089', cursor: 'pointer', fontSize: '0.8rem', position: 'absolute', right: '20px', top: '20px'}}>✎ Edit</button>
+                    </div>
+
                     <h1 className="display-text">Secure Your <span className="gradient-text">Radiance</span></h1>
                     
                     <div className="selection-preview">
@@ -153,7 +159,9 @@ function BookingApp() {
                 </div>
 
                 <div className="booking-v2-card-area">
-                    <div className="glass-concierge-card">
+                    <div className="glass-concierge-card" style={{position: 'relative'}}>
+                        <button className="close-modal" onClick={() => setShowExitModal(true)} style={{position: 'absolute', right: '30px', top: '25px', background: 'none', border: 'none', color: '#fff', fontSize: '1.5rem', cursor: 'pointer'}}>×</button>
+
                         {step === 1 && (
                             <div className="step-fade">
                                 <h3 className="step-title-standalone">Choose a Date</h3>
@@ -164,7 +172,6 @@ function BookingApp() {
                                         <button onClick={() => setCurrentMonth(prev => prev === 11 ? 0 : prev + 1)}>→</button>
                                     </div>
                                     <div className="week-grid">
-                                        {/* FIXED: Added index to key to prevent "S" and "T" duplicates */}
                                         {['S','M','T','W','T','F','S'].map((day, index) => (
                                             <div key={`${day}-${index}`}>{day}</div>
                                         ))}
@@ -177,6 +184,12 @@ function BookingApp() {
                                             </div>
                                         ))}
                                     </div>
+                                </div>
+                                <div className="availability-info" style={{marginTop: '30px', padding: '20px', borderTop: '1px solid rgba(255,255,255,0.1)'}}>
+                                    <p style={{color: '#c86089', marginBottom: '15px'}}>No availability for selected period</p>
+                                    <button className="next-avail-btn" onClick={handleNextAvailability} style={{background: 'none', border: '1px solid #c86089', color: '#c86089', padding: '12px 25px', borderRadius: '50px', cursor: 'pointer', fontWeight: '600'}}>
+                                        Check Next Availability
+                                    </button>
                                 </div>
                             </div>
                         )}
@@ -211,15 +224,9 @@ function BookingApp() {
                                     </div>
                                     <input type="email" placeholder="Email Address" className={errors.email ? 'err' : ''} value={email} onChange={e=>setEmail(e.target.value)} />
                                     <div className="modern-phone-wrap">
-                                        <PhoneInput 
-                                            country={'ma'} value={number} onChange={setNumber} 
-                                            containerClass="phone-v2-container" inputClass="phone-v2-input"
-                                            buttonClass="phone-v2-button" dropdownClass="phone-v2-dropdown"
-                                        />
+                                        <PhoneInput country={'ma'} value={number} onChange={setNumber} containerClass="phone-v2-container" inputClass="phone-v2-input" buttonClass="phone-v2-button" dropdownClass="phone-v2-dropdown" />
                                     </div>
-                                    <button className="confirm-main-btn" onClick={handleSendCode}>
-                                        {isSubmitting ? "Processing..." : "Continue"}
-                                    </button>
+                                    <button className="confirm-main-btn" onClick={handleSendCode}> {isSubmitting ? "Processing..." : "Continue"} </button>
                                 </div>
                             </div>
                         )}
@@ -231,14 +238,27 @@ function BookingApp() {
                                     <h3>Verification</h3>
                                 </div>
                                 <input type="text" className="otp-modern" maxLength="6" placeholder="000000" onChange={e=>setVerificationCode(e.target.value)} />
-                                <button className="confirm-main-btn" onClick={handleVerifyAndBook}>
-                                    {isSubmitting ? "Verifying..." : "Confirm Booking"}
-                                </button>
+                                <button className="confirm-main-btn" onClick={handleVerifyAndBook}> {isSubmitting ? "Verifying..." : "Confirm Booking"} </button>
                             </div>
                         )}
                     </div>
                 </div>
             </div>
+
+            {/* مودال التأكيد عند الخروج */}
+            {showExitModal && (
+                <div className="exit-overlay" style={{position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.8)', display: 'flex', alignItems: 'center', justifyContent: 'center', zIndex: 1000}}>
+                    <div className="exit-card" style={{background: '#fff', color: '#000', padding: '40px', borderRadius: '30px', textAlign: 'center', maxWidth: '400px'}}>
+                        <h2 style={{fontSize: '1.8rem', marginBottom: '15px'}}>Are you sure you want to close?</h2>
+                        <p style={{color: '#666', marginBottom: '30px'}}>If you've made any changes, they won't be saved.</p>
+                        <div style={{display: 'flex', gap: '15px', justifyContent: 'center'}}>
+                            <button onClick={() => setShowExitModal(false)} style={{padding: '12px 25px', borderRadius: '50px', border: '1px solid #ddd', background: 'none', cursor: 'pointer', fontWeight: 'bold'}}>No, Go Back</button>
+                            <button onClick={() => navigate('/')} style={{padding: '12px 25px', borderRadius: '50px', background: '#000', color: '#fff', border: 'none', cursor: 'pointer', fontWeight: 'bold'}}>Yes, Close</button>
+                        </div>
+                    </div>
+                </div>
+            )}
+
             {showToast && (
                 <div className={`toast-modern ${toastMessage.isError ? 'err' : 'success'}`}>
                     <div className="toast-content">

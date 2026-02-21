@@ -25,7 +25,7 @@ export default function BookingNow() {
   return (
     <>
       <Nav />
-
+{/* 
        <section 
         className="ps-hero" 
         style={{ backgroundImage: `url(${imgs.heroBg})` }}
@@ -43,7 +43,7 @@ export default function BookingNow() {
             space where your transformation is the only priority.
           </p>
         </div>
-      </section>
+      </section> */}
       
       <div id="booking-section">
         <BookingApp />

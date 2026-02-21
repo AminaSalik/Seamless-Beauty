@@ -1,4 +1,4 @@
-// 1. تأكد من وجود هذا السطر في أعلى الملف
+
 import { initializeApp } from "firebase/app"; 
 import { getFirestore } from "firebase/firestore";
 import { getAuth } from "firebase/auth"; 
