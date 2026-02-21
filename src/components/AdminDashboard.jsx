@@ -41,14 +41,12 @@ export default function AdminDashboard() {
       alert("Failed to update status. Check console.");
     }
   };
-
   const deleteBooking = async (e, id) => {
     if (e) e.preventDefault();
     if (window.confirm("Are you sure?")) {
       await deleteDoc(doc(db, "bookings", id));
     }
   };
-
   const filteredBookings = bookings.filter(b => {
     const name = `${b.firstName || ''} ${b.lastName || ''}`.toLowerCase();
     const matchesSearch = name.includes(searchTerm.toLowerCase()) || (b.number && b.number.includes(searchTerm));
@@ -130,7 +128,6 @@ export default function AdminDashboard() {
                                   </button>
                                 )}
 
-                                {/* زر Done: يظهر فقط في Confirmed */}
                                 {currentStatus === 'confirmed' && (
                                   <button
                                     type="button"
