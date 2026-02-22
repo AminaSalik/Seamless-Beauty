@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom'; 
 import '../assets/style/Booking.css';
 import { db } from '../config/firebaseConfig';
-import { collection, addDoc, serverTimestamp, onSnapshot, query } from "firebase/firestore";
+import { collection, addDoc, serverTimestamp, onSnapshot, query, where } from "firebase/firestore";
 import emailjs from '@emailjs/browser';
 import PhoneInput from 'react-phone-input-2';
 import 'react-phone-input-2/lib/style.css';
@@ -31,17 +31,30 @@ function BookingApp() {
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [toastMessage, setToastMessage] = useState({ text: "", isError: false });
     const [errors, setErrors] = useState({});
+    
     const [adminHolidays, setAdminHolidays] = useState([]);
+    const [bookedSlots, setBookedSlots] = useState([]); 
     const [showExitModal, setShowExitModal] = useState(false);
 
     const monthNames = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+    const timeOptions = ['09:00', '10:00', '11:00', '13:00', '14:30', '16:00', '17:00'];
 
     useEffect(() => {
-        const q = query(collection(db, "holidays"));
-        const unsubscribe = onSnapshot(q, (snap) => {
+        const qH = query(collection(db, "holidays"));
+        const unsubH = onSnapshot(qH, (snap) => {
             setAdminHolidays(snap.docs.map(doc => doc.id));
         });
-        return () => unsubscribe();
+
+        const qB = query(collection(db, "bookings"), where("status", "==", "confirmed"));
+        const unsubB = onSnapshot(qB, (snap) => {
+            const confirmed = snap.docs.map(doc => ({
+                date: doc.data().date,
+                time: doc.data().time
+            }));
+            setBookedSlots(confirmed);
+        });
+
+        return () => { unsubH(); unsubB(); };
     }, []);
 
     const triggerToast = (text, isError = false) => {
@@ -58,12 +71,33 @@ function BookingApp() {
     };
 
     const handleNextAvailability = () => {
-        if (currentMonth === 11) {
-            setCurrentMonth(0);
-            setCurrentYear(prev => prev + 1);
-        } else {
-            setCurrentMonth(prev => prev + 1);
+        let scanDate = new Date(currentYear, currentMonth, today.getDate() + 1);
+        let found = false;
+
+        for (let i = 0; i < 180; i++) {
+            const y = scanDate.getFullYear();
+            const m = scanDate.getMonth();
+            const d = scanDate.getDate();
+            const dateStr = `${y}-${(m + 1).toString().padStart(2, '0')}-${d.toString().padStart(2, '0')}`;
+
+            const isHoliday = adminHolidays.includes(dateStr);
+            const confirmedOnThisDay = bookedSlots.filter(slot => slot.date === dateStr).length;
+            
+            if (!isHoliday && confirmedOnThisDay < timeOptions.length) {
+                setCurrentMonth(m);
+                setCurrentYear(y);
+                setSelectedDate(dateStr);
+                triggerToast(`Jumping to: ${monthNames[m]} ${d}`);
+                found = true;
+                break;
+            }
+            scanDate.setDate(scanDate.getDate() + 1);
         }
+        if (!found) triggerToast("No confirmed availability found.", true);
+    };
+
+    const isSlotTaken = (date, time) => {
+        return bookedSlots.some(slot => slot.date === date && slot.time === time);
     };
 
     const handleSendCode = async () => {
@@ -123,21 +157,30 @@ function BookingApp() {
         for (let d = 1; d <= daysInMonth; d++) {
             const dateStr = `${currentYear}-${(currentMonth+1).toString().padStart(2,'0')}-${d.toString().padStart(2,'0')}`;
             const dateObj = new Date(currentYear, currentMonth, d);
-            days.push({ 
-                day: d, 
-                date: dateStr, 
-                status: (dateObj < today || adminHolidays.includes(dateStr)) ? 'unavailable' : 'available' 
-            });
+            
+            const slotsForDay = timeOptions.filter(t => isSlotTaken(dateStr, t));
+            const isFullyBooked = slotsForDay.length === timeOptions.length;
+
+            let status = 'available';
+            if (dateObj < today || adminHolidays.includes(dateStr)) {
+                status = 'unavailable';
+            } else if (isFullyBooked) {
+                status = 'fully-booked';
+            }
+            days.push({ day: d, date: dateStr, status });
         }
         return days;
     };
+
+    // Logic to decide if we show "Check Next Availability"
+    const isDayFullyBooked = selectedDate && timeOptions.every(t => isSlotTaken(selectedDate, t));
+    const isMonthEmpty = generateCalendarDays().filter(d => d.status === 'available').length === 0;
 
     return (
         <div className="booking-v2-wrapper feature-reveal-section">
             <Nav />
             <div className="booking-v2-hero">
                 <div className="hero-split-content">
-                    {/* بطاقة الخدمة مع زر تعديل */}
                     <div className="active-service-box" style={{ border: '1.5px solid #c86089', background: 'rgba(200, 96, 137, 0.05)', padding: '20px', borderRadius: '24px', marginBottom: '35px', maxWidth: '320px', position: 'relative' }}>
                         <span className="label" style={{color: '#888', fontSize: '0.7rem', letterSpacing: '2px', textTransform: 'uppercase'}}>Service</span>
                         <h2 style={{color: '#fff', fontSize: '1.5rem', margin: '8px 0'}}>{selectedService}</h2>
@@ -178,19 +221,28 @@ function BookingApp() {
                                     </div>
                                     <div className="days-grid">
                                         {generateCalendarDays().map((d, i) => (
-                                            <div key={d.date || `empty-${i}`} className={`day-cell ${d.status} ${selectedDate === d.date ? 'selected' : ''}`}
-                                                onClick={() => { if(d.status==='available'){ setSelectedDate(d.date); setStep(2); }}}>
+                                            <div key={d.date || `empty-${i}`} 
+                                                 className={`day-cell ${d.status} ${selectedDate === d.date ? 'selected' : ''}`}
+                                                 onClick={() => { if(d.status==='available'){ setSelectedDate(d.date); setStep(2); }}}>
                                                 {d.day}
                                             </div>
                                         ))}
                                     </div>
                                 </div>
-                                <div className="availability-info" style={{marginTop: '30px', padding: '20px', borderTop: '1px solid rgba(255,255,255,0.1)'}}>
-                                    <p style={{color: '#c86089', marginBottom: '15px'}}>No availability for selected period</p>
-                                    <button className="next-avail-btn" onClick={handleNextAvailability} style={{background: 'none', border: '1px solid #c86089', color: '#c86089', padding: '12px 25px', borderRadius: '50px', cursor: 'pointer', fontWeight: '600'}}>
-                                        Check Next Availability
-                                    </button>
-                                </div>
+                                
+                                {/* CONDITION: Show button only if Day is full OR Month is empty */}
+                                {(isDayFullyBooked || isMonthEmpty) ? (
+                                    <div className="availability-info" style={{marginTop: '30px', padding: '20px', borderTop: '1px solid rgba(255,255,255,0.1)'}}>
+                                        <p style={{color: '#c86089', marginBottom: '15px'}}>No more confirmed slots here.</p>
+                                        <button className="next-avail-btn" onClick={handleNextAvailability} style={{background: 'none', border: '1px solid #c86089', color: '#c86089', padding: '12px 25px', borderRadius: '50px', cursor: 'pointer', fontWeight: '600'}}>
+                                            Check Next Availability
+                                        </button>
+                                    </div>
+                                ) : (
+                                    <div className="availability-info" style={{marginTop: '30px', padding: '20px', borderTop: '1px solid rgba(255,255,255,0.1)', textAlign: 'center'}}>
+                                         <p style={{color: '#666', fontSize: '0.8rem'}}>Available slots found</p>
+                                    </div>
+                                )}
                             </div>
                         )}
 
@@ -201,12 +253,21 @@ function BookingApp() {
                                     <h3>Choose Time</h3>
                                 </div>
                                 <div className="time-grid-v2">
-                                    {['09:00', '10:00', '11:00', '13:00', '14:30', '16:00', '17:00'].map(t => (
-                                        <div key={t} className={`time-pill ${selectedTime === t ? 'selected' : ''}`}
-                                            onClick={() => { setSelectedTime(t); setStep(3); }}>
-                                            {formatTimeDisplay(t)}
-                                        </div>
-                                    ))}
+                                    {timeOptions.map(t => {
+                                        const taken = isSlotTaken(selectedDate, t);
+                                        return (
+                                            <div key={t} 
+                                                className={`time-pill ${selectedTime === t ? 'selected' : ''} ${taken ? 'taken' : ''}`}
+                                                onClick={() => { if(!taken) { setSelectedTime(t); setStep(3); } }}
+                                                style={{
+                                                    opacity: taken ? 0.3 : 1,
+                                                    cursor: taken ? 'not-allowed' : 'pointer',
+                                                    textDecoration: taken ? 'line-through' : 'none'
+                                                }}>
+                                                {formatTimeDisplay(t)}
+                                            </div>
+                                        );
+                                    })}
                                 </div>
                             </div>
                         )}
@@ -245,12 +306,11 @@ function BookingApp() {
                 </div>
             </div>
 
-            {/* مودال التأكيد عند الخروج */}
             {showExitModal && (
                 <div className="exit-overlay" style={{position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.8)', display: 'flex', alignItems: 'center', justifyContent: 'center', zIndex: 1000}}>
                     <div className="exit-card" style={{background: '#fff', color: '#000', padding: '40px', borderRadius: '30px', textAlign: 'center', maxWidth: '400px'}}>
-                        <h2 style={{fontSize: '1.8rem', marginBottom: '15px'}}>Are you sure you want to close?</h2>
-                        <p style={{color: '#666', marginBottom: '30px'}}>If you've made any changes, they won't be saved.</p>
+                        <h2 style={{fontSize: '1.8rem', marginBottom: '15px'}}>Are you sure?</h2>
+                        <p style={{color: '#666', marginBottom: '30px'}}>Your progress will be lost.</p>
                         <div style={{display: 'flex', gap: '15px', justifyContent: 'center'}}>
                             <button onClick={() => setShowExitModal(false)} style={{padding: '12px 25px', borderRadius: '50px', border: '1px solid #ddd', background: 'none', cursor: 'pointer', fontWeight: 'bold'}}>No, Go Back</button>
                             <button onClick={() => navigate('/')} style={{padding: '12px 25px', borderRadius: '50px', background: '#000', color: '#fff', border: 'none', cursor: 'pointer', fontWeight: 'bold'}}>Yes, Close</button>
@@ -265,7 +325,6 @@ function BookingApp() {
                         <div className="toast-icon">{toastMessage.isError ? '✕' : '✓'}</div>
                         <span className="toast-text">{toastMessage.text}</span>
                     </div>
-                    <div className="toast-progress"></div>
                 </div>
             )}
         </div>
