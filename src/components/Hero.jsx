@@ -22,7 +22,7 @@ export default function Hero() {
      <ProblemSolut/>
       <Benefits_ />
       <Services />
-      <Booking />
+      {/* <Booking /> */}
       <Footer />
       <ScrollToTopBtn />
     </>
